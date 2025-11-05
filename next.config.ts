@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: 'export',
   images: {
     remotePatterns: [
       {
@@ -16,6 +17,7 @@ const nextConfig: NextConfig = {
         hostname: 'github-readme-activity-graph.vercel.app',
       },
     ],
+    unoptimized: true,
   },
 };
 

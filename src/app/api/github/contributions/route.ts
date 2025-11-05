@@ -1,5 +1,9 @@
 import { NextResponse } from 'next/server';
 
+// Force static generation with revalidation every hour
+export const dynamic = 'force-static';
+export const revalidate = 3600; // 1 hour
+
 export async function GET() {
   try {
     // GitHub doesn't provide a direct API for contribution graph
