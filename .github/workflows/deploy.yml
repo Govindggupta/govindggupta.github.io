@@ -34,6 +34,8 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build the website
+        env:
+          PAGES_BASE_PATH: ""
         run: pnpm run build
 
       - name: Deploy to GitHub Pages
