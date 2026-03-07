@@ -1,88 +1,43 @@
-name: PR Preview Workflow
-
+name: Deploy PR Preview
 on:
-  pull_request_target:
-    types: [opened, synchronize, closed]
+  pull_request:
+    types: [opened, reopened, synchronize]
 
-permissions:
-  contents: write
-  pull-requests: write
+concurrency:
+  group: preview-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build-and-preview:
-    if: github.event.action == 'opened' || github.event.action == 'synchronize'
+  deploy-preview:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout 🛎️
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-          run_install: false
-
-      - name: Set up Node.js
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: "pnpm"
+          node-version: "18.x"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Clean build cache
-        run: rm -rf .next
-
-      - name: Build the website
-        env:
-          PAGES_BASE_PATH: /pr-previews/${{ github.event.pull_request.number }}
-        run: pnpm run build
-
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: gh-pages
-          folder: ./out
-          target-folder: pr-previews/${{ github.event.pull_request.number }}
-          clean: false
-          commit-message: Deploy preview for PR ${{ github.event.pull_request.number }}
-
-      - name: Comment Preview URL
-        uses: thollander/actions-comment-pull-request@v3
-        with:
-          message: |
-            <!-- preview-url-comment -->
-            Preview the changes: https://govindgupta.me/pr-previews/${{ github.event.pull_request.number }}
-          comment-tag: preview-url-comment
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  delete-preview-directory:
-    if: github.event.action == 'closed'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout gh-pages branch
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Remove PR Preview Directory
+      - name: Set base path for GitHub Pages
         run: |
-          PR_NUMBER=${{ github.event.pull_request.number }}
-          PREVIEW_DIR="pr-previews/${PR_NUMBER}"
-          if [ -d "${PREVIEW_DIR}" ]; then
-            git config --global user.name "github-actions[bot]"
-            git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            git pull origin gh-pages
-            rm -rf "${PREVIEW_DIR}"
-            git add .
-            git diff --staged --quiet || git commit -m "Remove preview for PR #${PR_NUMBER}"
-            git push
-          else
-            echo "Preview directory ${PREVIEW_DIR} not found, skipping."
-          fi
+          echo "BASE_PATH=/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+
+      - name: Build the app
+        run: pnpm build
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEPLOY_TARGET: github-pages
+
+      - name: Deploy to preview branch
+        uses: JamesIves/github-pages-deploy-action@v4.6.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages  # or any preview branch
+          folder: out        # output folder from `next build`
+          clean: true   
