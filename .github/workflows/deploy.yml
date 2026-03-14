@@ -1,48 +1,50 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages (main branch)
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
+# Allow only one concurrent deployment
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
           version: 10
           run_install: false
-      - uses: actions/setup-node@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: pnpm
-      - id: pages
-        uses: actions/configure-pages@v5
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build
-        env:
-          PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: ./out
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Next.js app
+        run: pnpm build
+        env:
+          # Set base path for the main site (your repo name)
+          PAGES_BASE_PATH: '/govindggutpa.github.io'
+          DEPLOY_TARGET: 'github-pages'
+
+      - name: Deploy to gh-pages branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ./out                 # Next.js output folder
+          branch: gh-pages               # Branch GitHub Pages will use
+          clean: true                     # Clean branch before deploying
+          clean-exclude: pr-preview       # ⚠️ CRITICAL: Preserve PR preview folders
+          # Optional: set to false to avoid force pushes (but may cause merge conflicts)
+          # force: false

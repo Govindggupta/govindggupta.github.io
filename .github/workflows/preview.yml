@@ -1,43 +1,62 @@
-name: Deploy PR Preview
+name: Deploy PR Previews
+
 on:
   pull_request:
-    types: [opened, reopened, synchronize]
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
 
-concurrency:
-  group: preview-${{ github.ref }}
-  cancel-in-progress: true
+concurrency: preview-${{ github.ref }}
 
 jobs:
   deploy-preview:
     runs-on: ubuntu-latest
+    # Avoid running on fork PRs (v1 of the action has limited fork support)
+    if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
-      - name: Checkout 🛎️
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4
-        with:
-          node-version: "18.x"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Set base path for GitHub Pages
-        run: |
-          echo "BASE_PATH=/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
-
-      - name: Build the app
+      - name: Build Next.js app for preview
+        if: github.event.action != 'closed'
         run: pnpm build
         env:
-          DEPLOY_TARGET: github-pages
+          # Dynamic base path for this PR preview
+          PAGES_BASE_PATH: '/govindggutpa.github.io/pr-preview/pr-${{ github.event.number }}'
+          DEPLOY_TARGET: 'github-pages'
 
-      - name: Deploy to preview branch
-        uses: JamesIves/github-pages-deploy-action@v4.6.0
+      - name: Deploy PR Preview
+        if: github.event.action != 'closed'
+        uses: rossjrw/pr-preview-action@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages  # or any preview branch
-          folder: out        # output folder from `next build`
-          clean: true   
+          source-dir: ./out
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          action: deploy
+          qr-code: true
+
+      - name: Remove PR Preview
+        if: github.event.action == 'closed'
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./out
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          action: remove
