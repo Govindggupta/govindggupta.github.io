@@ -8,7 +8,7 @@ import VerticalBar from "./ui/VerticalBar";
 
 export default function Navbar() {
   return (
-      <nav className="h-15 mb-3 screen-line-before screen-line-after p-1">
+      <nav className="h-15 mb-3 screen-line-before screen-line-after p-1 py-1.25">
         <div className="flex h-full items-center justify-between rounded-sm border border-border bg-background p-1">
           <BrandLogo />
 

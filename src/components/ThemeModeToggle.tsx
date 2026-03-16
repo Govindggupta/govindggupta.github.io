@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 type Theme = "light" | "dark";
 
 const THEME_TOGGLE_SOUND_URL = "/click.mp3";
-const THEME_TOGGLE_SOUND_VOLUME = 0.4;
+const THEME_TOGGLE_SOUND_VOLUME = 0.5;
 
 function resolveTheme(): Theme {
   if (typeof document === "undefined") {
