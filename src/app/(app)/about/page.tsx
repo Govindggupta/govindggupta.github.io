@@ -1,11 +1,75 @@
+import Panel from "@/components/portfolio/Panel";
+import {
+  aboutParagraphs,
+  focusAreas,
+  portfolio,
+  socialLinks,
+  stack,
+} from "@/content/portfolio";
+
 export default function About() {
-    return (
-        <div className="p-4">
-            <h1 className="text-2xl font-bold">About Me</h1>
-            <p className="mt-4">I&apos;m a passionate developer working on building amazing web experiences.</p>
-            <p className="text-center">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos porro, iusto omnis tenetur tempore id pariatur ab fugit eum maxime minima consequatur impedit laudantium perferendis nulla, nihil aspernatur dolore. Libero, sed reprehenderit id magnam dolor tempora nulla rerum, beatae, sunt aliquam similique! Excepturi, veritatis! Natus soluta, necessitatibus ea aliquam aut laboriosam aspernatur sapiente quaerat, quas quia assumenda iure a ad, ipsam alias minima asperiores consectetur dignissimos reprehenderit harum vitae corrupti dolore. Libero quibusdam veritatis at nisi omnis quia fugiat totam, dignissimos doloribus ullam sunt ut optio delectus cumque, provident molestias magnam labore architecto cum tenetur nemo, sapiente autem culpa ab. Quis provident accusantium quibusdam odit iste facilis eligendi architecto nam unde. Ipsa quod est perferendis atque vel aspernatur nostrum dignissimos, nobis iusto ducimus soluta deleniti ad dolor fuga tempora ea error qui velit ipsam corrupti quas fugit commodi accusantium? Iure consequatur ea, tempora exercitationem quasi ut dicta. Repellendus quisquam eveniet in, tempora asperiores nostrum dicta, praesentium minima quo libero laborum a voluptatum error aliquid, adipisci eaque doloribus! Voluptas consequatur dicta deserunt dolores ea expedita consectetur aliquam, odit, laborum quis aut quasi exercitationem in ducimus alias molestias reiciendis soluta, harum eum fugiat doloribus quo ipsam dignissimos! Accusamus neque nobis dignissimos at, commodi iure ea est quibusdam quas id aliquid distinctio laborum beatae doloribus ipsum, voluptatibus non? Reprehenderit, magni laudantium ducimus error cumque nihil harum explicabo libero quis suscipit labore dolorem ullam dolores maxime aperiam sapiente. Illo repellendus praesentium voluptatibus. Commodi quidem assumenda ipsum aperiam repudiandae nisi tenetur quibusdam laboriosam odit, accusamus dolores? Omnis placeat exercitationem labore minima magnam architecto dignissimos iure reprehenderit rem deleniti ipsa vitae, sunt dolores harum fugit explicabo ea maiores voluptas ex dicta, esse consequatur consequuntur. Deleniti culpa veritatis, nisi ipsum ullam facere commodi temporibus. Assumenda nam eligendi rerum sequi esse molestias unde repudiandae a illo recusandae voluptas, cumque consequatur ducimus nesciunt ut animi error ex mollitia dolor dicta laborum saepe quis veniam deserunt! Quae eligendi voluptatibus odio tempora aliquid beatae nisi provident quis pariatur neque ducimus quam temporibus nobis rem necessitatibus illum sint quisquam et aperiam fugiat itaque, accusamus totam? Rerum aliquid magnam officia adipisci saepe debitis voluptates est illo reprehenderit exercitationem doloremque quam porro, quidem a impedit sit sint consectetur reiciendis assumenda expedita unde! Hic, recusandae facere. Doloribus non nihil pariatur, maiores omnis nesciunt? Adipisci sint dignissimos sunt cumque tempora harum dolorem provident magnam cupiditate corrupti. Voluptas, minus incidunt. Expedita ullam alias rem eveniet fuga aperiam quod dolorem ea! Sed ut cum debitis illum earum quaerat voluptatem porro magnam beatae nemo magni assumenda a, quo voluptates necessitatibus similique, maxime quae molestias cumque? Delectus, aspernatur sequi qui suscipit dolores pariatur a corporis, illum sapiente ad quae molestiae ut ratione excepturi odio id rem dignissimos voluptate accusamus? Perferendis tempora cupiditate veniam, voluptatem eum maxime sapiente, fugiat deserunt dolor ducimus rem eligendi harum? Distinctio tempore, est nulla totam modi adipisci saepe cumque dicta atque possimus aliquid corporis ratione corrupti nam a facilis quae quas aperiam unde in nobis beatae repellendus quam. Voluptatum, saepe laboriosam? Porro voluptatibus amet, ea iusto in nobis, dolore iste libero quis quas ipsum facere molestiae nam aperiam nulla blanditiis. Mollitia animi quae deleniti nostrum alias officia voluptate exercitationem? Eum dignissimos porro nobis dolore officia laborum qui sint possimus consequuntur est, cumque, ipsa eveniet ea blanditiis impedit enim aperiam. Optio officia dolor doloremque accusamus vitae natus tenetur dolores ullam vel quod?
-            </p>
+  return (
+    <main className="screen-line-before screen-line-after mb-6 p-1 py-1.25">
+      <div className="rounded-sm border border-border bg-background p-3 sm:p-4">
+        <div className="grid gap-3 md:grid-cols-6">
+          <Panel eyebrow="About" title={`Meet ${portfolio.name}`} className="md:col-span-4">
+            <div className="space-y-4 text-sm leading-7 text-muted-foreground">
+              {aboutParagraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </Panel>
+
+          <Panel eyebrow="Profiles" title="Where to find me" className="md:col-span-2">
+            <div className="space-y-3">
+              {socialLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block rounded-sm border border-border p-3 transition-colors duration-200 hover:border-foreground/25 hover:bg-muted/20"
+                >
+                  <p className="text-sm font-semibold text-foreground">{link.label}</p>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{link.value}</p>
+                </a>
+              ))}
+              <div className="rounded-sm border border-border bg-muted/10 p-3">
+                <p className="text-sm font-semibold text-foreground">Location</p>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  {portfolio.location}
+                </p>
+              </div>
+            </div>
+          </Panel>
+
+          <Panel eyebrow="Focus" title="How I approach product work" className="md:col-span-3">
+            <div className="space-y-3">
+              {focusAreas.map((area) => (
+                <div key={area.title} className="rounded-sm border border-border bg-muted/10 p-3">
+                  <p className="text-sm font-semibold text-foreground">{area.title}</p>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {area.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </Panel>
+
+          <Panel eyebrow="Toolkit" title="Tools I use most often" className="md:col-span-3">
+            <div className="flex flex-wrap gap-2">
+              {stack.map((item) => (
+                <span
+                  key={item}
+                  className="rounded-sm border border-border bg-muted/15 px-2.5 py-1.5 text-xs uppercase tracking-[0.16em] text-foreground"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </Panel>
         </div>
-    )
+      </div>
+    </main>
+  );
 }

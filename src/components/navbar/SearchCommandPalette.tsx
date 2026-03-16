@@ -25,18 +25,12 @@ type PaletteSection = {
 
 const paletteSections: PaletteSection[] = [
   {
-    title: "Menu",
+    title: "Pages",
     items: [
       { label: "Home", href: "/", badge: "01" },
       { label: "About", href: "/about", badge: "02" },
       { label: "Projects", href: "/projects", badge: "03" },
-    ],
-  },
-  {
-    title: "Pages",
-    items: [
       { label: "Resume", href: "/resume", badge: "04" },
-      { label: "Check", href: "/check", badge: "05" },
     ],
   },
 ];
