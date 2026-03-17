@@ -10,22 +10,26 @@ jobs:
   deploy-preview:
     runs-on: ubuntu-latest
     if: github.event.pull_request.head.repo.full_name == github.repository
+
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
-          version: 10
+          version: 9
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
       - name: Build for preview
         if: github.event.action != 'closed'
         run: pnpm build
         env:
-          # Dynamic base path for this PR
-          NEXT_PUBLIC_BASE_PATH: '/govindggutpa.github.io/pr-preview/pr-${{ github.event.number }}'
+          NEXT_PUBLIC_BASE_PATH: '/pr-preview/pr-${{ github.event.number }}'
+
       - name: Deploy preview
         if: github.event.action != 'closed'
         uses: rossjrw/pr-preview-action@v1
@@ -34,6 +38,7 @@ jobs:
           preview-branch: gh-pages
           umbrella-dir: pr-preview
           action: deploy
+
       - name: Remove preview
         if: github.event.action == 'closed'
         uses: rossjrw/pr-preview-action@v1
@@ -42,3 +47,6 @@ jobs:
           preview-branch: gh-pages
           umbrella-dir: pr-preview
           action: remove
+
+permissions:
+  contents: write
