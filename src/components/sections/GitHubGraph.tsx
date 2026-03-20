@@ -1,10 +1,6 @@
 import type { ReactNode } from "react"
 
-import {
-  githubProfileUrl,
-  getGitHubContributionCalendar,
-  type GitHubContributionWeek,
-} from "@/lib/github"
+import { githubProfileUrl, getGitHubContributionCalendar, type GitHubContributionWeek } from "@/lib/github"
 
 const SQUARE_SIZE = 10
 const SQUARE_GAP = 3
@@ -126,18 +122,8 @@ function ContributionGraphSvg({
   )
 }
 
-function GraphShell({
-  children,
-}: Readonly<{
-  children: ReactNode
-}>) {
-  return (
-    <section className="space-y-6 border-t border-border pt-10">
-      <p className="text-xs tracking-widest text-muted uppercase">GitHub</p>
-
-      {children}
-    </section>
-  )
+function GraphShell({ children }: Readonly<{ children: ReactNode }>) {
+  return <section>{children}</section>
 }
 
 export function GitHubGraphFallback() {
@@ -187,17 +173,8 @@ export async function GitHubGraph() {
         <p className="text-sm text-muted">
           {calendar.totalContributions} contributions in the last year
         </p>
-        <div className="flex justify-end">
-          <a
-            href={githubProfileUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm text-muted transition-colors duration-200 hover:text-foreground"
-          >
-            View on GitHub →
-          </a>
-        </div>
       </div>
     </GraphShell>
   )
 }
+export const githubSectionLink = githubProfileUrl

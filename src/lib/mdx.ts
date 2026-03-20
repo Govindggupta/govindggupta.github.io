@@ -92,14 +92,15 @@ function toPostSlug(fileName: string) {
 }
 
 function parseFrontmatter(data: Record<string, unknown>, slug: string) {
-  const { title, date, description, tags } = data
+  const { title, date, description, tags, cover } = data
 
   if (
     typeof title !== "string" ||
     typeof date !== "string" ||
     typeof description !== "string" ||
     !Array.isArray(tags) ||
-    !tags.every((tag) => typeof tag === "string")
+    !tags.every((tag) => typeof tag === "string") ||
+    (cover !== undefined && typeof cover !== "string")
   ) {
     throw new Error(`Invalid frontmatter for blog post "${slug}".`)
   }
@@ -109,6 +110,7 @@ function parseFrontmatter(data: Record<string, unknown>, slug: string) {
     date,
     description,
     tags,
+    cover,
   }
 
   return frontmatter

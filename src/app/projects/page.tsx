@@ -1,4 +1,5 @@
 import { ProjectCard } from "@/components/ui/ProjectCard"
+import { BackLink } from "@/components/ui/BackLink"
 import { PageTransition } from "@/components/ui/PageTransition"
 import { getPinnedRepos } from "@/lib/github"
 import { buildMetadata } from "@/lib/metadata"
@@ -19,6 +20,7 @@ export default async function ProjectsPage() {
     <PageTransition className="mx-auto w-full max-w-[900px] px-4 section-space md:px-6">
       <section className="space-y-10">
         <div>
+          <BackLink href="/">Back home</BackLink>
           <h1 className="text-2xl font-bold text-foreground">Projects</h1>
           <p className="mt-1 text-sm text-muted">Things I&apos;ve built.</p>
         </div>

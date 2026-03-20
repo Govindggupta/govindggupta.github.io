@@ -31,6 +31,7 @@ export interface BlogPostFrontmatter {
   date: string
   description: string
   tags: string[]
+  cover?: string
 }
 
 export interface BlogPostSummary extends BlogPostFrontmatter {

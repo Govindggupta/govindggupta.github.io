@@ -1,4 +1,5 @@
 import { BlogCard } from "@/components/ui/BlogCard"
+import { BackLink } from "@/components/ui/BackLink"
 import { PageTransition } from "@/components/ui/PageTransition"
 import { getAllPosts } from "@/lib/mdx"
 import { buildMetadata } from "@/lib/metadata"
@@ -17,18 +18,16 @@ export default async function BlogPage() {
 
   return (
     <PageTransition className="mx-auto w-full max-w-[900px] px-4 section-space md:px-6">
-      <section className="space-y-10">
-        <div className="space-y-3">
-          <h1 className="font-heading text-step-4 tracking-[-0.06em] text-foreground">
-            Blog
-          </h1>
-          <p className="max-w-[900px] text-step-0 text-muted">
-            Notes on building better product surfaces, calmer tooling, and
-            cleaner frontend systems.
+      <section className="space-y-8">
+        <div>
+          <BackLink href="/">Back home</BackLink>
+          <h1 className="text-2xl font-bold text-foreground">Blog</h1>
+          <p className="mt-1 mb-8 text-sm text-muted">
+            Thoughts, learnings and things I find interesting.
           </p>
         </div>
 
-        <div>
+        <div className="grid grid-cols-1 gap-5">
           {posts.map((post) => (
             <BlogCard key={post.slug} post={post} />
           ))}

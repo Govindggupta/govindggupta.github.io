@@ -13,23 +13,24 @@ const navigation = [
 
 export function Footer() {
   return (
-    <footer className="px-4 py-16 transition-colors duration-300 md:px-6">
+    <footer className="mt-20 border-t border-border bg-background-alt/70 px-4 py-16 transition-colors duration-300 md:px-6 md:py-20">
       <div className="mx-auto w-full max-w-[900px]">
-        <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-          <div>
+        <div className="grid gap-10 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] md:items-start">
+          <div className="space-y-4">
             <Logo />
-            <p className="mt-1 text-sm text-muted">
-              Building things for the web.
+            <p className="max-w-[28rem] text-sm leading-6 text-muted">
+              Building thoughtful web products with clean systems, calm
+              interfaces, and durable frontend engineering.
             </p>
             <a
               href="mailto:govindgupta@email.com"
-              className="mt-1 inline-flex text-sm text-muted transition-colors duration-200 hover:text-foreground hover:underline"
+              className="inline-flex text-sm text-muted transition-colors duration-200 hover:text-foreground hover:underline"
             >
               govindgupta@email.com
             </a>
           </div>
 
-          <div className="flex gap-12">
+          <div className="grid grid-cols-2 gap-10 md:justify-self-end">
             <div>
               <p className="mb-3 text-xs tracking-widest text-muted uppercase">
                 Navigate
@@ -68,14 +69,11 @@ export function Footer() {
           </div>
         </div>
 
-        <hr className="my-6 border-border md:mt-8" />
+        <hr className="my-8 border-border" />
 
         <div className="flex flex-col gap-3 text-center md:flex-row md:items-center md:justify-between md:text-left">
           <p className="text-xs text-muted">
             © 2025 Govind Gupta. All rights reserved.
-          </p>
-          <p className="text-xs text-muted">
-            Built with Next.js & Tailwind CSS
           </p>
           <div className="flex justify-center md:justify-end">
             <BackToTop />

@@ -1,16 +1,15 @@
-import Link from "next/link"
-
 import { ProjectCard } from "@/components/ui/ProjectCard"
-import { getPinnedRepos } from "@/lib/github"
+import type { PinnedRepo } from "@/types"
 
-export async function FeaturedProjects() {
-  const repos = await getPinnedRepos()
+export function FeaturedProjects({
+  repos,
+}: {
+  repos: PinnedRepo[]
+}) {
   const featuredRepos = repos.slice(0, 4)
 
   return (
-    <section className="space-y-6 border-t border-border pt-10">
-      <p className="text-xs tracking-widest text-muted uppercase">Projects</p>
-
+    <section>
       {featuredRepos.length > 0 ? (
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {featuredRepos.map((repo, index) => (
@@ -20,15 +19,6 @@ export async function FeaturedProjects() {
       ) : (
         <p className="text-sm text-muted">No pinned repositories found.</p>
       )}
-
-      <div className="flex justify-end">
-        <Link
-          href="/projects"
-          className="text-sm text-muted transition-colors duration-200 hover:text-foreground"
-        >
-          View all projects →
-        </Link>
-      </div>
     </section>
   )
 }
