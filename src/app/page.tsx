@@ -9,6 +9,7 @@ import {
 import { FeaturedProjects } from "@/components/sections/FeaturedProjects"
 import { Hero } from "@/components/sections/Hero"
 import { LatestPosts } from "@/components/sections/LatestPosts"
+import { TechStack } from "@/components/sections/TechStack"
 import { SectionReveal } from "@/components/ui/SectionReveal"
 import { getAllPosts } from "@/lib/mdx"
 import { buildMetadata } from "@/lib/metadata"
@@ -74,6 +75,10 @@ export default async function HomePage() {
   return (
     <main className="pb-20 sm:pb-24">
       <Hero />
+
+      <SectionReveal className="mx-auto w-full max-w-[900px] px-4 pt-4 pb-10 md:px-6 md:pb-12">
+        <TechStack />
+      </SectionReveal>
 
       <SectionReveal className="mx-auto w-full max-w-[900px] px-4 py-16 md:px-6">
         <HomeSectionHeader

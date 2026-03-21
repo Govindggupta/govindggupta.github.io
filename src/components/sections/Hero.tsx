@@ -1,15 +1,43 @@
+import type { ReactNode } from "react"
 import * as motion from "framer-motion/client"
-import { Briefcase, Globe, MapPin } from "lucide-react"
+import {
+  BriefcaseBusiness,
+  Globe,
+  Mail,
+  MapPin,
+  User,
+} from "lucide-react"
 import Image from "next/image"
 
 import { socials } from "@/data/socials"
-import techStack from "@/data/techstack"
-import { TechIcon } from "@/components/ui/TechIcon"
 import { getGitHubProfile } from "@/lib/github"
 
 const heroTransition = {
-  duration: 0.4,
+  duration: 0.35,
   ease: "easeOut" as const,
+}
+
+function InfoIconShell({ children }: { children: ReactNode }) {
+  return (
+    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-background-alt/80 text-muted shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_1px_2px_rgba(0,0,0,0.08)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_1px_2px_rgba(0,0,0,0.35)]">
+      {children}
+    </span>
+  )
+}
+
+function HeroInfoRow({
+  icon,
+  children,
+}: {
+  icon: ReactNode
+  children: ReactNode
+}) {
+  return (
+    <div className="flex min-w-0 items-center gap-3">
+      <InfoIconShell>{icon}</InfoIconShell>
+      <div className="min-w-0 text-sm text-foreground">{children}</div>
+    </div>
+  )
 }
 
 export async function Hero() {
@@ -17,110 +45,106 @@ export async function Hero() {
   const name = profile.name ?? "Govind Gupta"
   const bio =
     profile.bio ??
-    "Building robust web apps. Focused on clean architecture and great user experience."
+    "Designing and shipping web products with a focus on clean systems, strong details, and a better user experience."
 
   return (
-    <section className="mx-auto w-full max-w-[900px] px-4 py-16 md:px-6 md:py-20">
-      <div className="space-y-8">
-        <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1.35fr)_minmax(0,0.9fr)]">
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={heroTransition}
-            className="order-2 max-w-[34rem] text-left md:order-1"
-          >
-            <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+    <section className="mx-auto w-full max-w-[900px] px-4 pt-16 pb-2 md:px-6 md:pt-18">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={heroTransition}
+        className="space-y-5"
+      >
+        <div className="grid items-center gap-4 md:grid-cols-[190px_minmax(0,1fr)] md:gap-8">
+          <div className="flex items-center justify-start">
+            <Image
+              src={profile.avatar_url}
+              alt={name}
+              width={160}
+              height={160}
+              sizes="(min-width: 768px) 160px, 112px"
+              priority
+              className="h-28 w-28 rounded-full object-cover sm:h-32 sm:w-32 md:h-40 md:w-40"
+            />
+          </div>
+
+          <div className="flex min-h-[150px] flex-col justify-center">
+            <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-[3.35rem]">
               {name}
             </h1>
-            <p className="mt-1 text-base text-muted">Full Stack Developer</p>
-
-            <p className="mt-3 max-w-[36rem] text-sm leading-6 text-muted">
+            <p className="mt-1 text-lg text-muted">Full Stack Developer</p>
+            <p className="mt-3 max-w-[42rem] text-sm leading-6 text-muted">
               {bio}
             </p>
-
-            <div className="mt-4 flex flex-col gap-1.5">
-              <div className="flex items-center gap-2 text-sm text-muted">
-                <MapPin size={15} strokeWidth={1.8} />
-                <span>India</span>
-              </div>
-
-              <div className="flex items-center gap-2 text-sm text-muted">
-                <Globe size={15} strokeWidth={1.8} />
-                <a
-                  href="https://govindgupta.me"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline decoration-border decoration-[1px] underline-offset-[3px] hover:opacity-60"
-                >
-                  govindgupta.me
-                </a>
-              </div>
-
-              <div className="flex items-center gap-2 text-sm text-muted">
-                <Briefcase size={15} strokeWidth={1.8} />
-                <span>Open to opportunities</span>
-              </div>
-            </div>
-
-            <div className="mt-5 flex gap-3">
-              {socials.map((item) => {
-                const Icon = item.icon
-
-                return (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={item.label}
-                    className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-transparent text-foreground transition-colors duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-800"
-                  >
-                    <Icon size={15} strokeWidth={1.8} />
-                  </a>
-                )
-              })}
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={heroTransition}
-            className="order-1 flex flex-col items-center gap-4 md:order-2 md:items-end md:justify-start md:pt-1"
-          >
-            <div className="overflow-hidden rounded-2xl border border-border">
-              <Image
-                src={profile.avatar_url}
-                alt={name}
-                width={160}
-                height={160}
-                sizes="(min-width: 768px) 160px, 88px"
-                priority
-                className="h-[88px] w-[88px] object-cover sm:h-[100px] sm:w-[100px] md:h-[152px] md:w-[152px]"
-              />
-            </div>
-
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1 text-xs text-muted">
-              <span className="h-2 w-2 rounded-full bg-neutral-400 dark:bg-neutral-500" />
-              <span>Available for work</span>
-            </div>
-          </motion.div>
+          </div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ ...heroTransition, delay: 0.1 }}
-          className="space-y-4"
-        >
-          <p className="text-xs tracking-widest text-muted uppercase">Stack</p>
-          <div className="flex flex-wrap gap-3">
-            {techStack.map((item) => (
-              <TechIcon key={item.name} tech={item} showTooltip />
-            ))}
+        <div className="grid gap-x-10 gap-y-2 sm:grid-cols-2">
+          <div className="space-y-2">
+            <HeroInfoRow
+              icon={<BriefcaseBusiness size={14} strokeWidth={1.8} />}
+            >
+              Full Stack Developer
+            </HeroInfoRow>
+
+            <HeroInfoRow icon={<MapPin size={14} strokeWidth={1.8} />}>
+              Surat, Gujarat, India
+            </HeroInfoRow>
+
+            <HeroInfoRow icon={<Globe size={14} strokeWidth={1.8} />}>
+              <a
+                href="https://govindgupta.me"
+                target="_blank"
+                rel="noreferrer"
+                className="underline decoration-border decoration-[1px] underline-offset-[3px] hover:opacity-70"
+              >
+                govindgupta.me
+              </a>
+            </HeroInfoRow>
           </div>
-        </motion.div>
-      </div>
+
+          <div className="space-y-2">
+            <HeroInfoRow
+              icon={
+                <span className="h-2 w-2 rounded-full bg-neutral-400 dark:bg-neutral-500" />
+              }
+            >
+              Open to work
+            </HeroInfoRow>
+
+            <HeroInfoRow icon={<Mail size={14} strokeWidth={1.8} />}>
+              <a
+                href="mailto:govindgupta@email.com"
+                className="underline decoration-border decoration-[1px] underline-offset-[3px] hover:opacity-70"
+              >
+                govindgupta@email.com
+              </a>
+            </HeroInfoRow>
+
+            <HeroInfoRow icon={<User size={14} strokeWidth={1.8} />}>
+              he/him
+            </HeroInfoRow>
+          </div>
+        </div>
+
+        <div className="pt-0.5">
+          <ul className="flex flex-wrap items-center gap-3">
+            {socials.map(({ href, icon: Icon, label }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={label}
+                  className="flex h-10 w-10 items-center justify-center rounded-xl text-foreground transition-opacity duration-200 hover:opacity-60"
+                >
+                  <Icon size={17} strokeWidth={1.8} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </motion.div>
     </section>
   )
 }

@@ -1,41 +1,46 @@
 "use client"
 
-import { useEffect, useState } from "react"
-
 import Image from "next/image"
 import Link from "next/link"
-import { useTheme } from "next-themes"
 
-import darkLogo from "@/logos/black_filled.svg"
-import lightLogo from "@/logos/white_filled.svg"
+import logoFilled from "@/logos/black_filled.svg"
+import logoFilledLight from "@/logos/white_filled.svg"
+import logoHover from "@/logos/black_thick_border.svg"
+import logoHoverLight from "@/logos/white_thick_border.svg"
 
 export function Logo() {
-  const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    return <div aria-hidden="true" style={{ width: 104, height: 36 }} />
-  }
-
-  const logoSrc = resolvedTheme === "dark" ? lightLogo : darkLogo
-
   return (
     <Link
       href="/"
-      className="inline-flex items-center transition-opacity duration-200 hover:opacity-60"
-      aria-label="Go to homepage"
+      className="group flex shrink-0 items-center"
+      aria-label="Go to home"
     >
-      <Image
-        src={logoSrc}
-        alt="Govind Gupta"
-        height={36}
-        priority
-        className="h-9 w-auto"
-      />
+      <span className="relative block aspect-[15/16] h-[3.25rem] overflow-hidden rounded-sm">
+        <Image
+          src={logoHoverLight}
+          alt=""
+          priority
+          className="absolute inset-0 hidden h-full w-full object-contain opacity-0 transition-opacity duration-150 group-hover:opacity-100 dark:block"
+        />
+        <Image
+          src={logoFilledLight}
+          alt=""
+          priority
+          className="absolute inset-0 hidden h-full w-full object-contain transition-opacity duration-150 group-hover:opacity-0 dark:block"
+        />
+        <Image
+          src={logoHover}
+          alt=""
+          priority
+          className="absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-150 group-hover:opacity-100 dark:hidden"
+        />
+        <Image
+          src={logoFilled}
+          alt=""
+          priority
+          className="absolute inset-0 h-full w-full object-contain transition-opacity duration-150 group-hover:opacity-0 dark:hidden"
+        />
+      </span>
     </Link>
   )
 }
