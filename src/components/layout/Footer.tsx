@@ -19,14 +19,13 @@ export function Footer() {
           <div className="space-y-4">
             <Logo />
             <p className="max-w-[28rem] text-sm leading-6 text-muted">
-              Building thoughtful web products with clean systems, calm
-              interfaces, and durable frontend engineering.
+              Ready to Colaborate!!
             </p>
             <a
               href="mailto:govindgupta@email.com"
               className="inline-flex text-sm text-muted transition-colors duration-200 hover:text-foreground hover:underline"
             >
-              govindgupta@email.com
+              contact@govindgupta.me
             </a>
           </div>
 

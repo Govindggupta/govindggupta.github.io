@@ -43,9 +43,6 @@ function HeroInfoRow({
 export async function Hero() {
   const profile = await getGitHubProfile()
   const name = profile.name ?? "Govind Gupta"
-  const bio =
-    profile.bio ??
-    "Designing and shipping web products with a focus on clean systems, strong details, and a better user experience."
 
   return (
     <section className="mx-auto w-full max-w-[900px] px-4 pt-16 pb-2 md:px-6 md:pt-18">
@@ -55,26 +52,25 @@ export async function Hero() {
         transition={heroTransition}
         className="space-y-5"
       >
-        <div className="grid items-center gap-4 md:grid-cols-[190px_minmax(0,1fr)] md:gap-8">
-          <div className="flex items-center justify-start">
+        <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
+          <div className="flex shrink-0 items-center justify-start">
             <Image
               src={profile.avatar_url}
               alt={name}
               width={160}
               height={160}
-              sizes="(min-width: 768px) 160px, 112px"
+              sizes="(min-width: 768px) 160px, 96px"
               priority
-              className="h-28 w-28 rounded-full object-cover sm:h-32 sm:w-32 md:h-40 md:w-40"
+              className="h-24 w-24 rounded-full object-cover sm:h-28 sm:w-28 md:h-40 md:w-40"
             />
           </div>
 
-          <div className="flex min-h-[150px] flex-col justify-center">
-            <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-[3.35rem]">
+          <div className="min-w-0">
+            <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl md:text-[3.35rem]">
               {name}
             </h1>
-            <p className="mt-1 text-lg text-muted">Full Stack Developer</p>
-            <p className="mt-3 max-w-[42rem] text-sm leading-6 text-muted">
-              {bio}
+            <p className="mt-1 text-base text-muted sm:text-lg">
+              Full Stack Developer
             </p>
           </div>
         </div>
@@ -136,7 +132,7 @@ export async function Hero() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl text-foreground transition-opacity duration-200 hover:opacity-60"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-background-alt/85 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_1px_2px_rgba(0,0,0,0.08)] transition-colors duration-200 hover:bg-background-alt dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_1px_2px_rgba(0,0,0,0.28)]"
                 >
                   <Icon size={17} strokeWidth={1.8} />
                 </a>
