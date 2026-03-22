@@ -9,6 +9,7 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 
+import { ProfileImageBorder } from "@/components/ui/ProfileImageBorder"
 import { socials } from "@/data/socials"
 import { getGitHubProfile } from "@/lib/github"
 
@@ -54,15 +55,20 @@ export async function Hero() {
       >
         <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
           <div className="flex shrink-0 items-center justify-start">
-            <Image
-              src={profile.avatar_url}
-              alt={name}
-              width={160}
-              height={160}
-              sizes="(min-width: 768px) 160px, 96px"
-              priority
-              className="h-26 w-26 rounded-full object-cover sm:h-30 sm:w-30 md:h-42 md:w-42 border border-border p-1" 
-            />
+            <ProfileImageBorder
+              size={168}
+              className="h-26 w-26 sm:h-30 sm:w-30 md:h-42 md:w-42"
+            >
+              <Image
+                src={profile.avatar_url}
+                alt={name}
+                width={168}
+                height={168}
+                sizes="(min-width: 768px) 168px, (min-width: 640px) 120px, 104px"
+                priority
+                className="h-full w-full rounded-full object-cover border border-border p-1"
+              />
+            </ProfileImageBorder>
           </div>
 
           <div className="min-w-0">
