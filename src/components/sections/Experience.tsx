@@ -103,14 +103,14 @@ function ExperienceAccordionItem({
         },
         scale: itemMotionTransition,
       }}
-      className="pt-4 pb-5 last:pb-0"
+      className="pt-4 pb-5 first:pt-0 last:pb-0"
     >
-      <div className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-3 gap-y-2 px-3 py-2 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:gap-x-4">
-        <div className="flex items-start justify-center pt-0.5">
+      <div className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-2.5 gap-y-2 pb-2 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:gap-x-3.5">
+        <div className="flex items-center justify-center">
           <ExperienceAvatar experience={experience} />
         </div>
 
-        <div className="min-w-0 flex items-center gap-2 px-2">
+        <div className="min-w-0 flex items-center gap-2">
           <p className="text-base font-semibold tracking-tight text-foreground sm:text-[1.1rem]">
             {companyContent}
           </p>
@@ -127,7 +127,7 @@ function ExperienceAccordionItem({
           ) : null}
         </div>
 
-        <div className="flex items-start justify-center">
+        <div className="flex items-center justify-center">
           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-border bg-background-alt/70 text-muted sm:h-[26px] sm:w-[26px]">
             <Code2 size={13} strokeWidth={1.8} />
           </span>
@@ -143,7 +143,7 @@ function ExperienceAccordionItem({
               onToggle()
             }
           }}
-          className="group min-w-0 cursor-pointer rounded-xl px-2 py-1.5 text-left transition-colors duration-150 hover:bg-neutral-50/70 dark:hover:bg-neutral-900/40"
+          className="group min-w-0 cursor-pointer rounded-xl py-1.5 text-left transition-colors duration-150 hover:bg-neutral-50/70 dark:hover:bg-neutral-900/40"
         >
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
@@ -159,7 +159,7 @@ function ExperienceAccordionItem({
             </div>
 
             <div className="flex shrink-0 items-center gap-2">
-              <span className="rounded-md border border-border bg-transparent px-1.5 py-0.5 text-xs font-normal text-muted">
+              <span className="rounded-md border border-border bg-neutral-100/80 px-1.5 py-0.5 text-xs font-normal text-muted dark:bg-neutral-900/70">
                 {formatType(experience.type)}
               </span>
               <motion.div
@@ -183,13 +183,13 @@ function ExperienceAccordionItem({
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-3 px-3 pt-3 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:gap-x-4">
+            <div className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-2.5 pt-3 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:gap-x-3.5">
               <div />
               <div className="space-y-2">
                 {experience.description.slice(0, 3).map((point) => (
                   <div key={point} className="flex items-start gap-3.5">
                     <span className="mt-[8px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-foreground/45" />
-                    <p className="text-[15px] leading-relaxed text-foreground/80 dark:text-foreground/75">
+                    <p className="text-[15px] leading-relaxed dark:text-[#dfdfdf] text-[#333]">
                       {point}
                     </p>
                   </div>
@@ -201,13 +201,13 @@ function ExperienceAccordionItem({
       </AnimatePresence>
 
       {experience.tech.length > 0 ? (
-        <div className="mt-3 grid grid-cols-[2rem_minmax(0,1fr)] gap-x-3 px-3 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:gap-x-4">
+        <div className="mt-3 grid grid-cols-[2rem_minmax(0,1fr)] gap-x-2.5 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:gap-x-3.5">
           <div />
           <div className="flex flex-wrap gap-1.5">
             {experience.tech.map((item) => (
               <span
                 key={item}
-                className="rounded-md border border-border px-2 py-0.5 text-xs text-muted transition-colors duration-150 hover:bg-neutral-50 dark:hover:bg-neutral-900"
+                    className="rounded-md border border-border bg-neutral-100/80 px-1 py-0.5 text-xs text-muted transition-colors duration-150 hover:bg-neutral-200/70 dark:bg-neutral-900/70 dark:hover:bg-neutral-800/80"
               >
                 {item}
               </span>

@@ -34,7 +34,7 @@ function HomeSectionHeader({
   showLink?: boolean
 }) {
   const content = (
-    <div className="mb-8 mt-24 flex items-start justify-between gap-6">
+    <div className="mb-8 mt-16 flex items-start justify-between gap-6">
       <div>
         <h2 className="text-4xl font-bold tracking-tight text-foreground">
           {title}
