@@ -95,7 +95,6 @@ export default async function HomePage() {
         <SectionReveal className="mx-auto w-full max-w-[900px] px-4 py-16 md:px-6">
           <HomeSectionHeader
             title="Experience"
-            count={experiences.length}
             description="Where I've worked."
             href="/"
             showLink={false}

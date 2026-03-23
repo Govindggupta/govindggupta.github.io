@@ -3,16 +3,18 @@ export interface Experience {
   role: string
   duration: string
   location: string
-  type: "full-time" | "part-time" | "internship" | "freelance"
   description: string[]
   tech: string[]
+  type?: "full-time" | "part-time" | "internship" | "freelance"
   url?: string
+  logo?: string
   current?: boolean
 }
 
 export const experiences: Experience[] = [
   {
     company: "Northstar Labs",
+    logo: "/logos/companies/northstar-labs.svg",
     role: "Full Stack Developer Intern",
     duration: "Jan 2026 – Present",
     location: "Remote",
@@ -28,6 +30,7 @@ export const experiences: Experience[] = [
   },
   {
     company: "Pixel Foundry",
+    logo: "/logos/companies/pixel-foundry.svg",
     role: "Freelance Frontend Developer",
     duration: "May 2025 – Dec 2025",
     location: "Surat, India",
@@ -42,6 +45,7 @@ export const experiences: Experience[] = [
   },
   {
     company: "Data Harbor",
+    logo: "/logos/companies/data-harbor.svg",
     role: "Backend Developer Intern",
     duration: "Sep 2024 – Apr 2025",
     location: "Hybrid",
