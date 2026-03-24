@@ -1,17 +1,3 @@
-type VerticalBarProps = {
-  height?: number;
-  className?: string;
-};
-
-export default function VerticalBar({
-  height = 20,
-  className = "",
-}: VerticalBarProps) {
-  return (
-    <span
-      aria-hidden="true"
-      className={`mx-0.5 inline-block w-px bg-border ${className}`}
-      style={{ height }}
-    />
-  );
+export default function VerticalBar() {
+  return <span aria-hidden="true" className="h-4 w-px bg-border dark:bg-[#333]" />;
 }
