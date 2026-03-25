@@ -137,9 +137,9 @@ export default async function HomePage() {
         </Suspense>
       </SectionReveal>
 
-      <SectionReveal className="mx-auto w-full max-w-[900px] px-4 py-16 md:px-6">
+      {/* <SectionReveal className="mx-auto w-full max-w-[900px] px-4 py-16 md:px-6">
         <Interests />
-      </SectionReveal>
+      </SectionReveal> */}
     </main>
   )
 }
