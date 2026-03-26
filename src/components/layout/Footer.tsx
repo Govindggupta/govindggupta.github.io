@@ -13,7 +13,7 @@ const navigation = [
 
 export function Footer() {
   return (
-    <footer className="mt-20 border-t border-border bg-background-alt/70 px-4 py-16 transition-colors duration-300 md:px-6 md:py-20">
+    <footer className="mt-20 border-t border-border bg-background-alt/70 px-4 py-16 md:px-6 md:py-20">
       <div className="mx-auto w-full max-w-[900px]">
         <div className="grid gap-10 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] md:items-start">
           <div className="space-y-4">
@@ -23,7 +23,7 @@ export function Footer() {
             </p>
             <a
               href="mailto:govindgupta@email.com"
-              className="inline-flex text-sm text-muted transition-colors duration-200 hover:text-foreground hover:underline"
+              className="inline-flex text-sm text-muted hover:text-foreground hover:underline"
             >
               contact@govindgupta.me
             </a>
@@ -39,7 +39,7 @@ export function Footer() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="block py-0.5 text-sm text-muted transition-colors duration-200 hover:text-foreground"
+                    className="block py-0.5 text-sm text-muted hover:text-foreground"
                   >
                     {item.label}
                   </Link>
@@ -58,7 +58,7 @@ export function Footer() {
                     href={item.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="block py-0.5 text-sm text-muted transition-colors duration-200 hover:text-foreground"
+                    className="block py-0.5 text-sm text-muted hover:text-foreground"
                   >
                     {item.label}
                   </a>

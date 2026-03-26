@@ -38,13 +38,13 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className="bg-background text-foreground transition-colors duration-300"
+      className="bg-background text-foreground"
     >
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} ${cascadiaCode.variable} min-h-screen bg-background font-sans text-foreground antialiased transition-colors duration-300`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${cascadiaCode.variable} min-h-screen bg-background font-sans text-foreground antialiased`}
       >
         <ThemeProvider>
-          <div className="flex min-h-screen flex-col bg-background transition-colors duration-300">
+          <div className="flex min-h-screen flex-col bg-background">
             <Navbar />
             <main className="mx-auto w-full max-w-[900px] flex-1 pt-[4.5rem]">
               {children}

@@ -12,7 +12,7 @@ export function BackToTop() {
     <button
       type="button"
       onClick={handleClick}
-      className="text-xs text-muted transition-colors duration-200 hover:text-foreground"
+      className="text-xs text-muted hover:text-foreground"
     >
       Back to top ↑
     </button>

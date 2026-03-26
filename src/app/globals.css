@@ -130,12 +130,12 @@
   }
 
   html {
-    @apply bg-background text-foreground transition-colors duration-300;
+    @apply bg-background text-foreground;
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-background font-sans text-foreground antialiased transition-colors duration-300;
+    @apply bg-background font-sans text-foreground antialiased;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-synthesis-weight: none;

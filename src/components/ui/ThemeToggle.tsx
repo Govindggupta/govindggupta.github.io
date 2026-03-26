@@ -7,22 +7,16 @@ import { useTheme } from "next-themes"
 
 const sunRays = [
   { x1: 12, y1: 2.25, x2: 12, y2: 4.5 },
-  { x1: 17.30, y1: 6.70, x2: 18.89, y2: 5.11 },
+  { x1: 17.3, y1: 6.7, x2: 18.89, y2: 5.11 },
   { x1: 21.75, y1: 12, x2: 19.5, y2: 12 },
-  { x1: 17.30, y1: 17.30, x2: 18.89, y2: 18.89 },
+  { x1: 17.3, y1: 17.3, x2: 18.89, y2: 18.89 },
   { x1: 12, y1: 19.5, x2: 12, y2: 21.75 },
-  { x1: 6.70, y1: 17.30, x2: 5.11, y2: 18.89 },
+  { x1: 6.7, y1: 17.3, x2: 5.11, y2: 18.89 },
   { x1: 4.5, y1: 12, x2: 2.25, y2: 12 },
-  { x1: 6.70, y1: 6.70, x2: 5.11, y2: 5.11 },
-] as const;
+  { x1: 6.7, y1: 6.7, x2: 5.11, y2: 5.11 },
+] as const
 
-function SunIcon({
-  hovered,
-  active,
-}: {
-  hovered: boolean
-  active: boolean
-}) {
+function SunIcon({ hovered, active }: { hovered: boolean; active: boolean }) {
   return (
     <motion.svg
       viewBox="0 0 24 24"
@@ -80,13 +74,7 @@ function SunIcon({
   )
 }
 
-function MoonIcon({
-  hovered,
-  active,
-}: {
-  hovered: boolean
-  active: boolean
-}) {
+function MoonIcon({ hovered, active }: { hovered: boolean; active: boolean }) {
   return (
     <motion.svg
       viewBox="0 0 24 24"
@@ -183,7 +171,7 @@ export function ThemeToggle() {
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
       whileTap={{ scale: 0.96 }}
-      className="relative flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-background-alt/80 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.08)] transition-colors duration-200 hover:bg-background-alt focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_2px_10px_rgba(0,0,0,0.32)]"
+      className="relative flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-background-alt/80 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.08)] hover:bg-background-alt focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:outline-none dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_2px_10px_rgba(0,0,0,0.32)]"
     >
       <motion.span
         aria-hidden="true"
@@ -195,7 +183,10 @@ export function ThemeToggle() {
         }}
         transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
       >
-        <MoonIcon hovered={hovered && isDark} active={activeAnimation === "moon"} />
+        <MoonIcon
+          hovered={hovered && isDark}
+          active={activeAnimation === "moon"}
+        />
       </motion.span>
 
       <motion.span
@@ -208,7 +199,10 @@ export function ThemeToggle() {
         }}
         transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
       >
-        <SunIcon hovered={hovered && !isDark} active={activeAnimation === "sun"} />
+        <SunIcon
+          hovered={hovered && !isDark}
+          active={activeAnimation === "sun"}
+        />
       </motion.span>
     </motion.button>
   )
