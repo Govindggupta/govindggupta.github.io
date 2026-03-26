@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react"
 
+import { AnimatePresence, motion } from "framer-motion"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { Logo } from "@/components/ui/Logo"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
+import VerticalBar from "../ui/VerticalBar"
 
 const navigation = [
   { href: "/", label: "Home" },
@@ -33,7 +35,7 @@ export function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3">
-      <nav className="mx-auto w-full max-w-[900px] rounded-2xl border border-border bg-background/80 backdrop-blur-sm transition-colors duration-300">
+      <nav className="mx-auto w-full max-w-[900px] rounded-2xl border border-border bg-background/80 backdrop-blur-sm">
         <div className="flex h-14 items-center justify-between px-4 md:px-6">
           <Logo />
 
@@ -58,8 +60,6 @@ export function Navbar() {
               })}
             </div>
 
-            <ThemeToggle />
-
             <button
               type="button"
               className="text-sm text-muted transition-opacity duration-200 hover:opacity-60 md:hidden"
@@ -69,34 +69,42 @@ export function Navbar() {
             >
               Menu
             </button>
+            <VerticalBar />
+            <ThemeToggle />
           </div>
         </div>
       </nav>
 
-      {isOpen ? (
-        <nav
-          id="mobile-navigation"
-          className="mx-auto mt-2 flex w-full max-w-[900px] flex-col gap-3 rounded-2xl border border-border bg-background/95 px-4 py-4 backdrop-blur-sm md:hidden md:px-6"
-        >
-          {navigation.map((item) => {
-            const active = isActivePath(pathname, item.href)
+      <AnimatePresence>
+        {isOpen ? (
+          <motion.nav
+            id="mobile-navigation"
+            className="fixed right-10 mx-auto mt-2 flex w-full max-w-[150px] flex-col gap-3 rounded-2xl border border-border bg-background/95 px-4 py-4 text-center backdrop-blur-sm md:hidden md:px-6"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.1 }}
+          >
+            {navigation.map((item) => {
+              const active = isActivePath(pathname, item.href)
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`text-sm tracking-[-0.02em] ${
-                  active
-                    ? "font-medium text-foreground underline decoration-current underline-offset-4"
-                    : "text-muted"
-                }`}
-              >
-                {item.label}
-              </Link>
-            )
-          })}
-        </nav>
-      ) : null}
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`text-sm tracking-[-0.02em] ${
+                    active
+                      ? "font-medium text-foreground underline decoration-current underline-offset-4"
+                      : "text-muted"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              )
+            })}
+          </motion.nav>
+        ) : null}
+      </AnimatePresence>
     </header>
   )
 }
