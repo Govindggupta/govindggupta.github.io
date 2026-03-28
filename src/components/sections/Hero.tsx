@@ -10,7 +10,9 @@ import {
 import Image from "next/image"
 
 import { ProfileImageBorder } from "@/components/ui/ProfileImageBorder"
+import { TextFlip } from "@/components/ui/TextFlip"
 import { VerifiedBadge } from "@/components/ui/VerifiedBadge"
+import { heroFlipSentences } from "@/data/hero"
 import { socials } from "@/data/socials"
 import { getGitHubProfile } from "@/lib/github"
 
@@ -77,9 +79,10 @@ export async function Hero() {
               <span className="block">{name}</span>
               <VerifiedBadge className="relative top-[0.02em] h-[0.52em] w-[0.52em] self-center md:h-[0.46em] md:w-[0.46em]" />
             </h1>
-            <p className="text-base text-muted sm:text-lg">
-              Full Stack Developer
-            </p>
+            <TextFlip
+              texts={heroFlipSentences}
+              className="block text-base text-muted sm:text-lg"
+            />
           </div>
         </div>
 
