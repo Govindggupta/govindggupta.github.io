@@ -21,7 +21,7 @@ export function Footer() {
               Ready to Collaborate!!
             </p>
             <a
-              href="mailto:govindgupta@email.com"
+              href="mailto:contact@govindgupta.me"
               className="inline-flex text-sm text-muted hover:text-foreground hover:underline"
             >
               contact@govindgupta.me
