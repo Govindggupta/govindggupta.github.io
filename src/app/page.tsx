@@ -34,8 +34,8 @@ function HomeSectionHeader({
   showLink?: boolean
 }) {
   const content = (
-    <div className="mb-8 mt-16 flex items-start justify-between gap-6">
-      <div>
+    <div className="mb-6 flex items-start justify-between gap-6">
+      <div className="space-y-1">
         <h2 className="text-4xl font-bold tracking-tight text-foreground">
           {title}
           {typeof count === "number" ? (
@@ -44,10 +44,10 @@ function HomeSectionHeader({
             </sup>
           ) : null}
         </h2>
-        <p className="mt-1 text-sm text-muted">{description}</p>
+        <p className="text-sm text-muted">{description}</p>
       </div>
       {showLink ? (
-        <span className="mt-2 shrink-0 text-sm text-muted transition-colors hover:text-foreground">
+        <span className="shrink-0 self-end text-sm text-muted transition-colors hover:text-foreground">
           {external ? "View on GitHub →" : "View all →"}
         </span>
       ) : null}
@@ -82,17 +82,20 @@ export async function generateMetadata() {
 
 export default async function HomePage() {
   const [repos, posts] = await Promise.all([getPinnedRepos(), getAllPosts()])
+  const projectsSpacingClass = experiences.length > 0 ? "mt-20" : "mt-24"
 
   return (
-    <main className="pb-20 sm:pb-24">
-      <Hero />
+    <main className="pb-16">
+      <div className="pt-20 [&>section]:pt-0 [&>section]:pb-0 [&>section]:md:pt-0">
+        <Hero />
+      </div>
 
-      <SectionReveal className="mx-auto w-full max-w-[900px] px-4 pt-2 pb-10 md:px-6 md:pb-12">
+      <SectionReveal className="mx-auto mt-12 w-full max-w-[900px] px-4 md:px-6">
         <TechStack />
       </SectionReveal>
 
       {experiences.length > 0 ? (
-        <SectionReveal className="mx-auto w-full max-w-[900px] px-4 py-16 md:px-6">
+        <SectionReveal className="mx-auto mt-24 w-full max-w-[900px] px-4 md:px-6">
           <HomeSectionHeader
             title="Experience"
             description="Where I've worked."
@@ -103,7 +106,9 @@ export default async function HomePage() {
         </SectionReveal>
       ) : null}
 
-      <SectionReveal className="mx-auto w-full max-w-[900px] px-4 py-16 md:px-6">
+      <SectionReveal
+        className={`mx-auto mt-24 w-full max-w-[900px] px-4 md:px-6`}
+      >
         <HomeSectionHeader
           title="Projects"
           count={repos.length}
@@ -114,7 +119,7 @@ export default async function HomePage() {
         <FeaturedProjects repos={repos.slice(0, 4)} />
       </SectionReveal>
 
-      <SectionReveal className="mx-auto w-full max-w-[900px] px-4 py-16 md:px-6">
+      <SectionReveal className="mx-auto mt-24 w-full max-w-[900px] px-4 md:px-6">
         <HomeSectionHeader
           title="Blog"
           count={posts.length}
@@ -125,7 +130,7 @@ export default async function HomePage() {
         <LatestPosts posts={posts.slice(0, 4)} />
       </SectionReveal>
 
-      <SectionReveal className="mx-auto w-full max-w-[900px] px-4 py-16 md:px-6">
+      <SectionReveal className="mx-auto mt-24 w-full max-w-[900px] px-4 md:px-6">
         <HomeSectionHeader
           title="GitHub"
           description="My open source activity."
@@ -137,7 +142,7 @@ export default async function HomePage() {
         </Suspense>
       </SectionReveal>
 
-      {/* <SectionReveal className="mx-auto w-full max-w-[900px] px-4 py-16 md:px-6">
+      {/* <SectionReveal className="mx-auto mt-14 w-full max-w-[900px] px-4 md:px-6">
         <Interests />
       </SectionReveal> */}
     </main>
