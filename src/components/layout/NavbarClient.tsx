@@ -99,7 +99,7 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
             <motion.nav
               ref={mobileMenuRef}
               id="mobile-navigation"
-              className="fixed right-4 z-20 mx-auto mt-2 flex w-full max-w-37.5 flex-col rounded-2xl border border-border bg-background px-2 py-2 text-center backdrop-blur-sm md:hidden md:px-6"
+              className="fixed right-4 z-20 mx-auto mt-2 flex w-full max-w-37.5 flex-col rounded-2xl border border-border bg-background dark:bg-background-alt px-2 py-2 text-center backdrop-blur-sm md:hidden md:px-6"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -114,7 +114,7 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
                     href={item.href}
                     className={`rounded-lg px-3 py-1.5 text-sm tracking-[-0.02em] transition-colors duration-200 ${
                       active
-                        ? "bg-background-alt/80 font-medium text-foreground"
+                        ? "bg-background-alt/90 dark:bg-[#222] font-medium text-foreground"
                         : "text-muted hover:bg-background-alt/50 hover:text-foreground"
                     }`}
                   >
