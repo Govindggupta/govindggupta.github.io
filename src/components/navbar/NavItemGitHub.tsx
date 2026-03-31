@@ -16,25 +16,24 @@ const getStargazerCount = unstable_cache(
             "X-GitHub-Api-Version": "2022-11-28",
             ...(token ? { Authorization: `Bearer ${token}` } : {}),
           },
-          next: {
-            revalidate: 86400,
-          },
         }
       )
 
       if (!response.ok) {
-        return 0
+        return null
       }
 
       const payload = (await response.json()) as { stargazers_count?: number }
-      return Number(payload.stargazers_count) || 0
+      const stargazersCount = Number(payload.stargazers_count)
+
+      return Number.isFinite(stargazersCount) ? stargazersCount : null
     } catch {
-      return 0
+      return null
     }
   },
-  ["github-stargazer-count-v2"],
+  ["github-stargazer-count"],
   {
-    revalidate: 86400,
+    revalidate: 3600,
   }
 )
 
