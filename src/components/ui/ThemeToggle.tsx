@@ -17,6 +17,8 @@ const sunRays = [
   { x1: 6.7, y1: 6.7, x2: 5.11, y2: 5.11 },
 ] as const
 
+const CLICK_VOLUME = 0.4
+
 function SunIcon({ hovered, active }: { hovered: boolean; active: boolean }) {
   return (
     <motion.svg
@@ -135,7 +137,7 @@ export function ThemeToggle() {
 
   useEffect(() => {
     audioRef.current = new Audio("/click.mp3")
-    audioRef.current.volume = 0.5
+    audioRef.current.volume = CLICK_VOLUME
     audioRef.current.preload = "auto"
 
     return () => {
@@ -166,6 +168,7 @@ export function ThemeToggle() {
     setActiveAnimation(nextAnimation)
     setTooltipDismissed(true)
     if (audioRef.current) {
+      audioRef.current.volume = CLICK_VOLUME
       audioRef.current.currentTime = 0
       void audioRef.current.play().catch(() => {})
     }
@@ -232,11 +235,7 @@ export function ThemeToggle() {
         }}
         onHoverEnd={clearTooltip}
         whileTap={{ scale: 0.96 }}
-        className={`relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-foreground transition-colors duration-200 ease-out focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:outline-none ${
-          activeAnimation
-            ? "bg-background-alt dark:bg-white/14"
-            : "bg-transparent hover:bg-background-alt active:bg-neutral-200 dark:hover:bg-white/10 dark:active:bg-white/14"
-        }`}
+        className="relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl bg-transparent text-foreground transition-colors duration-200 ease-out hover:bg-background-alt active:bg-neutral-200 focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:outline-none dark:hover:bg-white/10 dark:active:bg-white/14"
       >
         <motion.span
           aria-hidden="true"
