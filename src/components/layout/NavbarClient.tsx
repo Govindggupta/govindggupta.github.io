@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import type { ReactNode } from "react"
 
 import { AnimatePresence, motion } from "framer-motion"
@@ -34,11 +34,30 @@ type NavbarClientProps = {
 export function NavbarClient({ githubNavItem }: NavbarClientProps) {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
-  const mobileMenuRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     setIsOpen(false)
   }, [pathname])
+
+  useEffect(() => {
+    if (!isOpen) {
+      return
+    }
+
+    const previousHtmlOverflow = document.documentElement.style.overflow
+    const previousBodyOverflow = document.body.style.overflow
+    const previousBodyTouchAction = document.body.style.touchAction
+
+    document.documentElement.style.overflow = "hidden"
+    document.body.style.overflow = "hidden"
+    document.body.style.touchAction = "none"
+
+    return () => {
+      document.documentElement.style.overflow = previousHtmlOverflow
+      document.body.style.overflow = previousBodyOverflow
+      document.body.style.touchAction = previousBodyTouchAction
+    }
+  }, [isOpen])
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3">
@@ -56,9 +75,7 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
                     key={item.href}
                     href={item.href}
                     className={`text-sm font-medium tracking-[-0.02em] transition-colors duration-200 ease-out hover:text-foreground ${
-                      active
-                        ? "text-foreground"
-                        : "text-muted"
+                      active ? "text-foreground" : "text-muted"
                     }`}
                   >
                     {item.label}
@@ -71,7 +88,7 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
             <VerticalBar />
             <ThemeToggle />
 
-            <div className="z-20 md:hidden flex items-center">
+            <div className="z-20 flex items-center md:hidden">
               <Hamburger
                 isOpen={isOpen}
                 onClick={() => setIsOpen((open) => !open)}
@@ -97,9 +114,8 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
             />
 
             <motion.nav
-              ref={mobileMenuRef}
               id="mobile-navigation"
-              className="fixed right-4 z-20 mx-auto mt-2 flex w-full max-w-37.5 flex-col rounded-2xl border border-border bg-background dark:bg-background-alt px-2 py-2 text-center backdrop-blur-sm md:hidden md:px-6"
+              className="fixed right-4 z-20 mx-auto mt-2 flex w-full max-w-37.5 flex-col rounded-2xl border border-border bg-background px-2 py-2 text-center backdrop-blur-sm md:hidden md:px-6 dark:bg-background-alt"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -114,7 +130,7 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
                     href={item.href}
                     className={`rounded-lg px-3 py-1.5 text-sm tracking-[-0.02em] transition-colors duration-200 ${
                       active
-                        ? "bg-background-alt/90 dark:bg-[#222] font-medium text-foreground"
+                        ? "bg-background-alt/90 font-medium text-foreground dark:bg-[#222]"
                         : "text-muted hover:bg-background-alt/50 hover:text-foreground"
                     }`}
                   >
