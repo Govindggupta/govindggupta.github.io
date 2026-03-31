@@ -17,15 +17,17 @@ const sunRays = [
   { x1: 6.7, y1: 6.7, x2: 5.11, y2: 5.11 },
 ] as const
 
+const CLICK_VOLUME = 0.4
+
 function SunIcon({ hovered, active }: { hovered: boolean; active: boolean }) {
   return (
     <motion.svg
       viewBox="0 0 24 24"
-      width="16"
-      height="16"
+      width="17"
+      height="17"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="2.3"
       strokeLinecap="round"
       strokeLinejoin="round"
       initial={false}
@@ -37,7 +39,7 @@ function SunIcon({ hovered, active }: { hovered: boolean; active: boolean }) {
         duration: active ? 0.95 : 0.22,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="text-neutral-700 dark:text-neutral-200"
+      className="text-black dark:text-white"
     >
       <motion.circle
         cx="12"
@@ -79,11 +81,11 @@ function MoonIcon({ hovered, active }: { hovered: boolean; active: boolean }) {
   return (
     <motion.svg
       viewBox="0 0 24 24"
-      width="15"
-      height="15"
+      width="17"
+      height="17"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="2.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       initial={false}
@@ -125,7 +127,6 @@ function isEditableTarget(target: EventTarget | null) {
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
   const [hovered, setHovered] = useState(false)
   const [tooltipDismissed, setTooltipDismissed] = useState(false)
   const [activeAnimation, setActiveAnimation] = useState<"sun" | "moon" | null>(
@@ -135,9 +136,8 @@ export function ThemeToggle() {
   const resetTimeoutRef = useRef<number | null>(null)
 
   useEffect(() => {
-    setMounted(true)
     audioRef.current = new Audio("/click.mp3")
-    audioRef.current.volume = 0.5
+    audioRef.current.volume = CLICK_VOLUME
     audioRef.current.preload = "auto"
 
     return () => {
@@ -152,6 +152,10 @@ export function ThemeToggle() {
 
   const isDark = resolvedTheme === "dark"
   const isTooltipVisible = hovered && !tooltipDismissed
+  const clearTooltip = useCallback(() => {
+    setHovered(false)
+    setTooltipDismissed(false)
+  }, [])
 
   const handleToggle = useCallback(() => {
     const nextTheme = isDark ? "light" : "dark"
@@ -164,6 +168,7 @@ export function ThemeToggle() {
     setActiveAnimation(nextAnimation)
     setTooltipDismissed(true)
     if (audioRef.current) {
+      audioRef.current.volume = CLICK_VOLUME
       audioRef.current.currentTime = 0
       void audioRef.current.play().catch(() => {})
     }
@@ -175,10 +180,6 @@ export function ThemeToggle() {
   }, [isDark, setTheme])
 
   useEffect(() => {
-    if (!mounted) {
-      return
-    }
-
     function handleThemeShortcut(event: KeyboardEvent) {
       if (
         event.defaultPrevented ||
@@ -204,62 +205,74 @@ export function ThemeToggle() {
     return () => {
       document.removeEventListener("keydown", handleThemeShortcut)
     }
-  }, [handleToggle, mounted])
+  }, [handleToggle])
 
-  if (!mounted) {
-    return <div aria-hidden="true" className="h-9 w-9" />
-  }
+  useEffect(() => {
+    function handleVisibilityChange() {
+      if (document.hidden) {
+        clearTooltip()
+      }
+    }
+
+    window.addEventListener("blur", clearTooltip)
+    document.addEventListener("visibilitychange", handleVisibilityChange)
+
+    return () => {
+      window.removeEventListener("blur", clearTooltip)
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
+    }
+  }, [clearTooltip])
 
   return (
-    <motion.button
-      type="button"
-      aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
-      onClick={handleToggle}
-      onHoverStart={() => {
-        setTooltipDismissed(false)
-        setHovered(true)
-      }}
-      onHoverEnd={() => {
-        setHovered(false)
-        setTooltipDismissed(false)
-      }}
-      whileTap={{ scale: 0.96 }}
-      className="relative flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-background-alt/80 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.08)] hover:bg-background-alt focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:outline-none dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_2px_10px_rgba(0,0,0,0.32)]"
-    >
-      <motion.span
-        aria-hidden="true"
-        className="absolute inset-0 flex items-center justify-center"
-        initial={false}
-        animate={{
-          opacity: isDark ? 1 : 0,
-          scale: isDark ? 1 : 0.88,
+    <div className="group relative">
+      <motion.button
+        type="button"
+        aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+        onClick={handleToggle}
+        onHoverStart={() => {
+          setTooltipDismissed(false)
+          setHovered(true)
         }}
-        transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        onHoverEnd={clearTooltip}
+        whileTap={{ scale: 0.96 }}
+        className="relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl bg-transparent text-foreground transition-colors duration-200 ease-out hover:bg-background-alt active:bg-neutral-200 focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:outline-none dark:hover:bg-white/10 dark:active:bg-white/14"
       >
-        <MoonIcon
-          hovered={hovered && isDark}
-          active={activeAnimation === "moon"}
-        />
-      </motion.span>
+        <motion.span
+          aria-hidden="true"
+          className="absolute inset-0 hidden items-center justify-center dark:flex"
+          initial={false}
+          animate={{
+            opacity: 1,
+            scale: 1,
+          }}
+          transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <MoonIcon
+            hovered={hovered}
+            active={activeAnimation === "moon"}
+          />
+        </motion.span>
 
-      <motion.span
-        aria-hidden="true"
-        className="absolute inset-0 flex items-center justify-center"
-        initial={false}
-        animate={{
-          opacity: isDark ? 0 : 1,
-          scale: isDark ? 0.88 : 1,
-        }}
-        transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <SunIcon
-          hovered={hovered && !isDark}
-          active={activeAnimation === "sun"}
-        />
-      </motion.span>
+        <motion.span
+          aria-hidden="true"
+          className="absolute inset-0 flex items-center justify-center dark:hidden"
+          initial={false}
+          animate={{
+            opacity: 1,
+            scale: 1,
+          }}
+          transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <SunIcon
+            hovered={hovered}
+            active={activeAnimation === "sun"}
+          />
+        </motion.span>
+      </motion.button>
 
-      <span
-        className={`pointer-events-none absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 ${
+      <div
+        role="tooltip"
+        className={`pointer-events-none absolute top-full left-1/2 z-20 mt-2 -translate-x-1/2 whitespace-nowrap ${
           tooltipDismissed
             ? "invisible opacity-0 transition-none"
             : isTooltipVisible
@@ -267,27 +280,17 @@ export function ThemeToggle() {
               : "invisible opacity-0 transition-opacity duration-100"
         }`}
       >
-        <span
-          className={`relative inline-flex items-center gap-2 whitespace-nowrap rounded-[0.9rem] border px-3 py-2 text-[13px] leading-none font-medium shadow-[0_12px_28px_rgba(15,23,42,0.16)] ${
-            isDark
-              ? "border-black/10 bg-white text-neutral-900"
-              : "border-white/10 bg-neutral-950 text-white shadow-[0_12px_28px_rgba(0,0,0,0.28)]"
-          }`}
-        >
+        <span className="relative inline-flex items-center gap-2 whitespace-nowrap rounded-[0.9rem] border border-white/10 bg-neutral-950 px-3 py-2 text-[13px] leading-none font-medium text-white dark:border-black/10 dark:bg-white dark:text-neutral-900">
           <span>Toggle Mode</span>
-          {isDark
-          ? <KeyboardKey tone= "light"size="xs">D</KeyboardKey>
-          : <KeyboardKey tone="dark" size="xs">D</KeyboardKey>
-          }
-          <span
-            className={`absolute left-1/2 bottom-full h-2.5 w-2.5 -translate-x-1/2 translate-y-1 rotate-45 border-l border-t ${
-              isDark
-                ? "border-black/10 bg-white"
-                : "border-white/10 bg-neutral-950"
-            }`}
-          />
+          <span className="dark:hidden">
+            <KeyboardKey tone="dark" size="xs">D</KeyboardKey>
+          </span>
+          <span className="hidden dark:inline-flex">
+            <KeyboardKey tone="light" size="xs">D</KeyboardKey>
+          </span>
+          <span className="absolute left-1/2 bottom-full h-2.5 w-2.5 -translate-x-1/2 translate-y-1 rotate-45 border-l border-t border-white/10 bg-neutral-950 dark:border-black/10 dark:bg-white" />
         </span>
-      </span>
-    </motion.button>
+      </div>
+    </div>
   )
 }
