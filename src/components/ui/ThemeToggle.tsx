@@ -17,7 +17,8 @@ const sunRays = [
   { x1: 6.7, y1: 6.7, x2: 5.11, y2: 5.11 },
 ] as const
 
-const CLICK_VOLUME = 0.2
+const CLICK_SOUND_SRC = "/click_20.mp3"
+const CLICK_VOLUME = 1
 
 function SunIcon({ hovered, active }: { hovered: boolean; active: boolean }) {
   return (
@@ -135,11 +136,18 @@ export function ThemeToggle() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const resetTimeoutRef = useRef<number | null>(null)
 
-  useEffect(() => {
-    audioRef.current = new Audio("/click.mp3")
-    audioRef.current.volume = CLICK_VOLUME
-    audioRef.current.preload = "auto"
+  const getClickAudio = useCallback(() => {
+    if (!audioRef.current) {
+      const audio = new Audio(CLICK_SOUND_SRC)
+      audio.volume = CLICK_VOLUME
+      audio.preload = "none"
+      audioRef.current = audio
+    }
 
+    return audioRef.current
+  }, [])
+
+  useEffect(() => {
     return () => {
       if (resetTimeoutRef.current !== null) {
         window.clearTimeout(resetTimeoutRef.current)
@@ -167,17 +175,16 @@ export function ThemeToggle() {
 
     setActiveAnimation(nextAnimation)
     setTooltipDismissed(true)
-    if (audioRef.current) {
-      audioRef.current.volume = CLICK_VOLUME
-      audioRef.current.currentTime = 0
-      void audioRef.current.play().catch(() => {})
-    }
+    const clickAudio = getClickAudio()
+    clickAudio.volume = CLICK_VOLUME
+    clickAudio.currentTime = 0
+    void clickAudio.play().catch(() => {})
     setTheme(nextTheme)
 
     resetTimeoutRef.current = window.setTimeout(() => {
       setActiveAnimation(null)
     }, 1150)
-  }, [isDark, setTheme])
+  }, [getClickAudio, isDark, setTheme])
 
   useEffect(() => {
     function handleThemeShortcut(event: KeyboardEvent) {
