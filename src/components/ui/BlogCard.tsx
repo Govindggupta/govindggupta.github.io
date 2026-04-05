@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import type { BlogPostSummary } from "@/types"
+import { ArrowRight } from "lucide-react"
 
 interface BlogCardProps {
   post: BlogPostSummary
@@ -54,7 +55,7 @@ export function BlogCard({ post }: BlogCardProps) {
             <p className="text-muted">{formatCardDate(post.date)}</p>
           </div>
 
-          <h2 className="mt-3 text-base font-semibold leading-snug text-foreground transition-opacity duration-200 group-hover:opacity-70">
+          <h2 className="mt-3 text-base leading-snug font-semibold text-foreground transition-opacity duration-200 group-hover:opacity-70">
             {post.title}
           </h2>
 
@@ -63,7 +64,10 @@ export function BlogCard({ post }: BlogCardProps) {
           </p>
 
           <p className="mt-4 text-sm font-medium text-foreground underline decoration-border decoration-[1px] underline-offset-[3px]">
-            Read article →
+            <span className="flex">
+              Read article
+              <ArrowRight className="ml-1" />
+            </span>
           </p>
         </div>
       </Link>

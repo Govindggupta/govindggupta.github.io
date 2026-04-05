@@ -65,16 +65,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
             )}
           </span>
           <span>
-            <span className="relative inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-border text-black dark:text-white">
+            <span className="relative inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden text-black dark:text-white">
               <ArrowUpRight
                 size={17}
                 strokeWidth={2}
-                className="absolute transition-all duration-200 ease-out group-hover:translate-x-5 group-hover:-translate-y-5 group-hover:opacity-0"
-              />
-              <ArrowUpRight
-                size={17}
-                strokeWidth={2}
-                className="absolute -translate-x-5 translate-y-5 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100"
+                className="absolute -translate-x-2 translate-y-2 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100"
               />
             </span>
           </span>
