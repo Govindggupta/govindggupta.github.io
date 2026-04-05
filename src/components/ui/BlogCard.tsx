@@ -30,7 +30,7 @@ export function BlogCard({ post }: BlogCardProps) {
         href={`/blog/${post.slug}`}
         className="group block h-full overflow-hidden rounded-2xl border border-border transition-colors duration-200 hover:bg-neutral-50 dark:hover:bg-neutral-900"
       >
-        <div className="relative aspect-[16/7] w-full overflow-hidden border-b border-border bg-neutral-100 dark:bg-neutral-800">
+        <div className="relative aspect-16/7 w-full overflow-hidden border-b border-border bg-neutral-100 dark:bg-neutral-800">
           {showCover ? (
             <Image
               src={post.cover ?? ""}
@@ -42,7 +42,7 @@ export function BlogCard({ post }: BlogCardProps) {
             />
           ) : (
             <div className="flex h-full items-center justify-center px-6 text-center">
-              <p className="line-clamp-2 max-w-[22rem] text-xl font-semibold tracking-tight text-foreground/20 md:text-2xl">
+              <p className="line-clamp-2 max-w-88 text-xl font-semibold tracking-tight text-foreground/20 md:text-2xl">
                 {post.title}
               </p>
             </div>
@@ -63,10 +63,10 @@ export function BlogCard({ post }: BlogCardProps) {
             {post.description}
           </p>
 
-          <p className="mt-4 text-sm font-medium text-foreground underline decoration-border decoration-[1px] underline-offset-[3px]">
-            <span className="flex">
+          <p className="mt-4 text-sm font-medium text-foreground underline decoration-border decoration-1 underline-offset-[3px]">
+            <span className="inline-flex items-center gap-1">
               Read article
-              <ArrowRight className="ml-1" />
+              <ArrowRight size={14} strokeWidth={1.9} className="mt-px shrink-0" />
             </span>
           </p>
         </div>
