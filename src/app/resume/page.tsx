@@ -29,7 +29,7 @@ export default function ResumePage() {
           <iframe
             title="Resume PDF"
             src={resumeViewerPath}
-            className="h-[88vh] w-full"
+            className="h-screen w-full"
           />
         </div>
 
