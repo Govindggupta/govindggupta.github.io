@@ -76,7 +76,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
 
         <div className="-mx-4 mt-4 -mb-4 h-40 overflow-hidden rounded-b-2xl">
-          <div className="h-full w-full origin-bottom-right translate-x-7 translate-y-1 -rotate-5 transform-gpu overflow-hidden rounded-2xl border border-t border-black/12 border-t-border bg-neutral-100 shadow-[0_4px_10px_rgba(0,0,0,0.18)] transition-transform duration-150 ease-out group-hover:-rotate-1 dark:border-border dark:bg-neutral-900 dark:shadow-none">
+          <div className="h-full w-full origin-bottom-right translate-x-7 translate-y-1 -rotate-3 transform-gpu overflow-hidden rounded-2xl border border-t border-black/12 border-t-border bg-neutral-100 shadow-[0_4px_10px_rgba(0,0,0,0.18)] transition-transform duration-150 ease-out group-hover:-rotate-1 dark:border-border dark:bg-neutral-900 dark:shadow-none">
             {previewUrl ? (
               <div className="relative h-full w-full bg-neutral-200 dark:bg-neutral-800">
                 <Image
