@@ -11,23 +11,6 @@ interface ProjectCardProps {
   project: PinnedRepo
 }
 
-function getProjectInitials(name: string) {
-  const parts = name
-    .split(/[\s-_]+/)
-    .filter(Boolean)
-    .slice(0, 2)
-
-  if (parts.length === 0) {
-    return "PR"
-  }
-
-  if (parts.length === 1) {
-    return parts[0].slice(0, 2).toUpperCase()
-  }
-
-  return parts.map((part) => part[0]?.toUpperCase() ?? "").join("")
-}
-
 function getPreviewUrl(homepageUrl: string) {
   return `https://api.microlink.io?url=${encodeURIComponent(homepageUrl)}&screenshot=true&meta=false&embed=screenshot.url`
 }
@@ -45,11 +28,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
       href={projectHref}
       target="_blank"
       rel="noreferrer"
-      className="group block aspect-[10/6.180] w-full self-start overflow-hidden rounded-2xl border border-border transition-colors duration-150 hover:bg-foreground/2.5 dark:hover:bg-foreground/5"
+      className="group block self-start overflow-hidden rounded-2xl border border-border bg-[var(--color-background-primary)] transition-colors duration-150 hover:bg-foreground/5 dark:hover:bg-foreground/10"
       aria-label={`${project.name} project link`}
     >
-      <article className="flex h-full min-h-0 flex-col p-4">
-        <div className="flex items-start justify-between gap-4 h-14">
+      <article className="flex min-h-0 flex-col">
+        <div className="flex items-start justify-between gap-4 px-4 pt-4">
           <div className="min-w-0 flex-1">
             <h2 className="text-lg font-semibold text-foreground">
               {project.name}
@@ -64,39 +47,39 @@ export function ProjectCard({ project }: ProjectCardProps) {
               </p>
             )}
           </div>
-          <div className="shrink-0">
-            <span className="relative inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden text-black dark:text-white">
-              <ArrowUpRight
-                size={17}
-                strokeWidth={2}
-                className="absolute -translate-x-2 translate-y-2 opacity-0 transition-all duration-150 ease-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100"
-              />
-            </span>
-          </div>
+          <span className="relative inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden text-black dark:text-white">
+            <ArrowUpRight
+              size={17}
+              strokeWidth={2}
+              className="absolute -translate-x-2 translate-y-2 opacity-0 transition-all duration-150 ease-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100"
+            />
+          </span>
         </div>
 
-        <div className="-mx-4 mt-4 -mb-4 min-h-0 flex-1 overflow-hidden rounded-b-2xl">
-          <div className="h-full w-full origin-bottom-right translate-x-12 translate-y-0 -rotate-5 transform-gpu overflow-hidden rounded-2xl border border-t border-black/12 border-t-border bg-neutral-100 shadow-[0_4px_10px_rgba(0,0,0,0.18)] transition-transform duration-150 ease-out group-hover:-rotate-1 dark:border-border dark:bg-neutral-900 dark:shadow-none">
-            {previewUrl ? (
-              <div className="relative h-full w-full bg-neutral-200 dark:bg-neutral-800">
-                <Image
-                  src={previewUrl}
-                  alt={`${project.name} preview`}
-                  fill
-                  sizes="(min-width: 768px) 420px, 100vw"
-                  className="object-cover object-top"
-                  onError={() => setImageFailed(true)}
-                  unoptimized
-                />
-              </div>
-            ) : (
-              <div className="flex h-full w-full items-center justify-center bg-neutral-200 dark:bg-neutral-800">
-                <span className="text-2xl font-semibold tracking-[-0.04em] text-foreground">
-                  {getProjectInitials(project.name)}
-                </span>
-              </div>
-            )}
-          </div>
+        <div className="relative mx-3 mb-3 aspect-video overflow-hidden rounded-xl border border-border bg-neutral-200 dark:bg-neutral-800">
+          {previewUrl ? (
+            <Image
+              src={previewUrl}
+              alt={project.name}
+              fill
+              sizes="(min-width: 768px) 420px, 100vw"
+              className="object-cover object-top"
+              onError={() => setImageFailed(true)}
+              unoptimized
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center bg-neutral-200 dark:bg-neutral-800">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute text-[clamp(2.5rem,9vw,5rem)] font-black tracking-tighter whitespace-nowrap text-foreground opacity-[0.04] select-none"
+              >
+                {project.name}
+              </span>
+              <span className="relative z-10 px-4 text-center text-[clamp(0.85rem,2.2vw,1.1rem)] leading-snug font-medium tracking-tight break-words text-muted">
+                {project.name}
+              </span>
+            </div>
+          )}
         </div>
       </article>
     </a>
