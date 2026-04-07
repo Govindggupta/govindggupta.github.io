@@ -28,7 +28,7 @@ export function BlogCard({ post }: BlogCardProps) {
     <article className="h-full">
       <Link
         href={`/blog/${post.slug}`}
-        className="group flex aspect-[10/6.180] h-full w-full self-start flex-col overflow-hidden rounded-2xl border border-border transition-colors duration-200 hover:bg-neutral-50 dark:hover:bg-neutral-900"
+        className="group grid aspect-[10/6.180] h-full w-full self-start grid-rows-[1.618fr_1fr] overflow-hidden rounded-2xl border border-border transition-colors duration-200 hover:bg-neutral-50 dark:hover:bg-neutral-900"
       >
         <div className="relative min-h-0 flex-1 overflow-hidden border-b border-border bg-neutral-100 dark:bg-neutral-800">
           {showCover ? (
@@ -49,7 +49,7 @@ export function BlogCard({ post }: BlogCardProps) {
           )}
         </div>
 
-        <div className="shrink-0 p-5">
+        <div className="flex min-h-0 flex-col justify-between p-5">
           <h2 className="line-clamp-2 text-lg leading-snug font-semibold text-foreground transition-opacity duration-200 group-hover:opacity-70">
             {post.title}
           </h2>
