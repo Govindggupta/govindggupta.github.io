@@ -28,9 +28,9 @@ export function BlogCard({ post }: BlogCardProps) {
     <article className="h-full">
       <Link
         href={`/blog/${post.slug}`}
-        className="group block h-full overflow-hidden rounded-2xl border border-border transition-colors duration-200 hover:bg-neutral-50 dark:hover:bg-neutral-900"
+        className="group flex aspect-[10/6.180] h-full w-full self-start flex-col overflow-hidden rounded-2xl border border-border transition-colors duration-200 hover:bg-neutral-50 dark:hover:bg-neutral-900"
       >
-        <div className="relative aspect-16/7 w-full overflow-hidden border-b border-border bg-neutral-100 dark:bg-neutral-800">
+        <div className="relative min-h-0 flex-1 overflow-hidden border-b border-border bg-neutral-100 dark:bg-neutral-800">
           {showCover ? (
             <Image
               src={post.cover ?? ""}
@@ -49,26 +49,25 @@ export function BlogCard({ post }: BlogCardProps) {
           )}
         </div>
 
-        <div className="p-5">
-          <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-            <p className="font-medium text-muted">Govind Gupta</p>
-            <p className="text-muted">{formatCardDate(post.date)}</p>
-          </div>
-
-          <h2 className="mt-3 text-base leading-snug font-semibold text-foreground transition-opacity duration-200 group-hover:opacity-70">
+        <div className="shrink-0 p-5">
+          <h2 className="line-clamp-2 text-lg leading-snug font-semibold text-foreground transition-opacity duration-200 group-hover:opacity-70">
             {post.title}
           </h2>
 
-          <p className="mt-2 line-clamp-2 text-sm text-muted">
-            {post.description}
-          </p>
+          <div className="mt-4 flex items-center justify-between gap-3">
+            <p className="text-sm text-muted">{formatCardDate(post.date)}</p>
 
-          <p className="mt-4 text-sm font-medium text-foreground underline decoration-border decoration-1 underline-offset-[3px]">
-            <span className="inline-flex items-center gap-1">
-              Read article
-              <ArrowRight size={14} strokeWidth={1.9} className="mt-px shrink-0" />
-            </span>
-          </p>
+            <p className="shrink-0 text-sm font-medium text-muted underline decoration-border decoration-1 underline-offset-[3px]">
+              <span className="inline-flex items-center gap-1">
+                Read article
+                <ArrowRight
+                  size={14}
+                  strokeWidth={1.9}
+                  className="mt-px shrink-0 text-muted transition-[color,transform] duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+                />
+              </span>
+            </p>
+          </div>
         </div>
       </Link>
     </article>
