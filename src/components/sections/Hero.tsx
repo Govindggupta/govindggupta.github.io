@@ -142,9 +142,9 @@ export async function Hero() {
               <span className="cursor-text">he/him</span>
             </HeroInfoRow>
           </ul>
-        </div>
 
-        <HeroSocialLinks />
+          <HeroSocialLinks />
+        </div>
       </motion.div>
     </section>
   )

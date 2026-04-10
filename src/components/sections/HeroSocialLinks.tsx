@@ -16,7 +16,7 @@ function getSocialHoverBgClass(label: string) {
 }
 
 function getSocialIconSize(label: string) {
-  return label === "X" ? 24 : 27
+  return label === "X" ? 16 : 18
 }
 
 export function HeroSocialLinks() {
