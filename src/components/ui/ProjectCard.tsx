@@ -32,7 +32,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       aria-label={`${project.name} project link`}
     >
       <article className="flex min-h-0 flex-col">
-        <div className="flex items-start justify-between gap-4 px-4 pt-4">
+        <div className="flex items-start justify-between px-4 pt-4">
           <div className="min-w-0 flex-1">
             <h2 className="text-lg font-semibold text-foreground">
               {project.name}
@@ -56,7 +56,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </span>
         </div>
 
-        <div className="relative mx-3 mb-3 aspect-video overflow-hidden rounded-xl border border-border bg-neutral-200 dark:bg-neutral-800">
+        <div className="relative mx-2 mb-2 aspect-video overflow-hidden rounded-xl border border-border bg-neutral-200 dark:bg-neutral-800">
           {previewUrl ? (
             <Image
               src={previewUrl}
