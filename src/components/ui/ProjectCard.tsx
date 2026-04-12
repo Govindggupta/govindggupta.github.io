@@ -68,10 +68,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
               unoptimized
             />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-neutral-200 dark:bg-neutral-800">
+            <div className="absolute inset-0 flex items-center justify-center bg-black dark:bg-black ">
+              <span className="h-70 w-70 rounded-full absolute -left-30 bg-white/4"></span>
+              <span className="h-50 w-50 rounded-full absolute -bottom-30 left-20 bg-white/4"></span>
+              <span className="h-60 w-60 rounded-full absolute  bottom-30 -right-10 bg-white/4"></span>
+              <span className="h-90 w-90 rounded-full absolute  -bottom-50 -right-55 border-50 border-white/4"></span>
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute text-[clamp(2.5rem,9vw,5rem)] font-black tracking-tighter whitespace-nowrap text-foreground opacity-[0.04] select-none"
+                className="pointer-events-none absolute whitespace-nowrap text-[clamp(2.5rem,9vw,5rem)] font-black tracking-tighter text-white opacity-[0.08] select-none dark:text-foreground dark:opacity-[0.04]"
               >
                 {project.name}
               </span>
