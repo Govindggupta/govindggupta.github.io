@@ -30,7 +30,7 @@ export function BlogCard({ post }: BlogCardProps) {
         href={`/blog/${post.slug}`}
         className="group block self-start overflow-hidden rounded-2xl border border-border transition-colors duration-200 hover:bg-foreground/2.5 dark:hover:bg-foreground/5"
       >
-        <div className="relative mx-2 mt-2 aspect-video overflow-hidden rounded-xl border border-border bg-neutral-200 dark:bg-neutral-800">
+        <div className="relative mx-2 mt-2 aspect-1200/630 overflow-hidden rounded-xl border border-border bg-neutral-200 dark:bg-neutral-800">
           {showCover ? (
             <Image
               src={post.cover ?? ""}

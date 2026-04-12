@@ -56,7 +56,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </span>
         </div>
 
-        <div className="relative mx-2 mb-2 aspect-video overflow-hidden rounded-xl border border-border bg-neutral-200 dark:bg-neutral-800">
+        <div className="relative mx-2 mb-2 aspect-1200/630 overflow-hidden rounded-xl border border-border bg-neutral-200 dark:bg-neutral-800">
           {previewUrl ? (
             <Image
               src={previewUrl}
