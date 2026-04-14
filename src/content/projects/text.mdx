@@ -1,0 +1,26 @@
+---
+title: "Test Project"
+description: "A fake project entry used to verify the MDX case study flow."
+date: "2024-04-28"
+status: "completed"
+github: "https://github.com/govindggupta/chess"
+live: "https://chess-sand-sigma.vercel.app"
+tech: ["React", "Node.js", "WebSockets"]
+image: "https://api.microlink.io?url=https%3A%2F%2Fchess-sand-sigma.vercel.app&screenshot=true&meta=false&embed=screenshot.url"
+---
+
+## Overview
+
+This is a fake project page I added to verify that the MDX-powered project detail flow is working correctly. It exists purely as a content test, but it still follows the same frontmatter and section structure as the real case studies so the route, metadata, and rendering all behave the same way.
+
+## Why it exists
+
+I wanted a lightweight way to confirm that adding a new project file is enough to create a working project detail page. That makes it easier to test slug generation, MDX parsing, static params, and the page layout without having to depend on a real repository or a production-ready writeup every time.
+
+## Technical setup
+
+This file uses the exact same shape as the other project entries. The title, description, date, status, links, technology tags, and image all come directly from frontmatter. The body content is standard MDX, which means the page can be rendered statically without any GitHub API dependency or runtime fallback logic.
+
+## What it confirms
+
+The main thing this test proves is that the project detail page now treats MDX as the single source of truth. If this file exists and the frontmatter is valid, the route should render. If the file is missing or invalid, the route should fall back to a proper not found state.

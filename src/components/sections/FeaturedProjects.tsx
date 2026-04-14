@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
 import { ProjectCard } from "@/components/ui/ProjectCard"
+import { toProjectSlug } from "@/lib/projects"
 import type { PinnedRepo } from "@/types"
 
 export function FeaturedProjects({ repos }: { repos: PinnedRepo[] }) {
@@ -18,9 +19,13 @@ export function FeaturedProjects({ repos }: { repos: PinnedRepo[] }) {
                 const bHasUrl = b.homepageUrl ? 1 : 0
                 return bHasUrl - aHasUrl
               })
-              .map((repo) => (
-                <ProjectCard key={repo.name} project={repo} />
-              ))}
+              .map((repo) => {
+                const slug = toProjectSlug(repo.name)
+
+                return (
+                  <ProjectCard key={repo.name} project={repo} slug={slug} />
+                )
+              })}
           </div>
 
           <div className="flex justify-center">
