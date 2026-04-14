@@ -169,10 +169,6 @@ async function readProjectSource(slug: string) {
   }
 }
 
-export function toProjectSlug(repoName: string) {
-  return repoName.toLowerCase().replace(/[._]/g, "-")
-}
-
 export function formatProjectDate(date: string) {
   return new Intl.DateTimeFormat("en-US", {
     month: "short",

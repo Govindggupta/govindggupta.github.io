@@ -18,27 +18,9 @@ export function FeaturedProjects({ projects }: { projects: ProjectSummary[] }) {
                 const bHasUrl = b.live ? 1 : 0
                 return bHasUrl - aHasUrl
               })
-              .map((project) => {
-                const cardProject = {
-                  name: project.title,
-                  description: project.description,
-                  url: project.github,
-                  homepageUrl: project.live ?? null,
-                  stargazerCount: 0,
-                  forkCount: 0,
-                  language: null,
-                  topics: [],
-                  imageUrl: project.image,
-                }
-
-                return (
-                  <ProjectCard
-                    key={project.slug}
-                    project={cardProject}
-                    slug={project.slug}
-                  />
-                )
-              })}
+              .map((project) => (
+                <ProjectCard key={project.slug} project={project} />
+              ))}
           </div>
 
           <div className="flex justify-center">

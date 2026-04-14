@@ -20,17 +20,6 @@ export interface Project {
   liveUrl: string
 }
 
-export interface PinnedRepo {
-  name: string
-  description: string | null
-  url: string
-  homepageUrl: string | null
-  stargazerCount: number
-  forkCount: number
-  language: string | null
-  topics: string[]
-}
-
 export interface BlogPostFrontmatter {
   title: string
   date: string

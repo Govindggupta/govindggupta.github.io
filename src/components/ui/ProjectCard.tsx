@@ -6,39 +6,27 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 
-import type { PinnedRepo } from "@/types"
+import type { ProjectSummary } from "@/lib/projects"
 
 interface ProjectCardProps {
-  project: PinnedRepo & {
-    imageUrl?: string | null
-  }
-  slug: string
+  project: ProjectSummary
 }
 
-function getPreviewUrl(homepageUrl: string) {
-  return `https://api.microlink.io?url=${encodeURIComponent(homepageUrl)}&screenshot=true&meta=false&embed=screenshot.url`
-}
-
-export function ProjectCard({ project, slug }: ProjectCardProps) {
+export function ProjectCard({ project }: ProjectCardProps) {
   const [imageFailed, setImageFailed] = useState(false)
-  const previewUrl =
-    project.imageUrl && !imageFailed
-      ? project.imageUrl
-      : project.homepageUrl && !imageFailed
-        ? getPreviewUrl(project.homepageUrl)
-        : null
+  const previewUrl = project.image && !imageFailed ? project.image : null
 
   return (
     <Link
-      href={`/projects/${slug}`}
+      href={`/projects/${project.slug}`}
       className="group block self-start overflow-hidden rounded-2xl border border-border bg-[var(--color-background-primary)] transition-colors duration-150 hover:bg-foreground/3 dark:hover:bg-foreground/3"
-      aria-label={`${project.name} case study`}
+      aria-label={`${project.title} case study`}
     >
       <article className="flex min-h-0 flex-col">
         <div className="flex items-start justify-between px-4 pt-4">
           <div className="min-w-0 flex-1">
             <h2 className="text-lg font-semibold text-foreground">
-              {project.name}
+              {project.title}
             </h2>
             {project.description ? (
               <p className="mt-2 line-clamp-2 min-h-10 text-sm text-muted">
@@ -63,7 +51,7 @@ export function ProjectCard({ project, slug }: ProjectCardProps) {
           {previewUrl ? (
             <Image
               src={previewUrl}
-              alt={project.name}
+              alt={project.title}
               fill
               sizes="(min-width: 768px) 420px, 100vw"
               className="object-cover object-top"
@@ -80,10 +68,10 @@ export function ProjectCard({ project, slug }: ProjectCardProps) {
                 aria-hidden="true"
                 className="pointer-events-none absolute text-[clamp(2.5rem,9vw,5rem)] font-black tracking-tighter whitespace-nowrap text-white opacity-[0.08] select-none dark:text-foreground dark:opacity-[0.04]"
               >
-                {project.name}
+                {project.title}
               </span>
               <span className="relative z-10 px-4 text-center text-[clamp(0.85rem,2.2vw,1.1rem)] leading-snug font-medium tracking-tight break-words text-muted">
-                {project.name}
+                {project.title}
               </span>
             </div>
           )}
