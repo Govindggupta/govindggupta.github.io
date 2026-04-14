@@ -58,23 +58,29 @@ const mdxComponents: MDXComponents = {
   h2: (props: ComponentPropsWithoutRef<"h2">) =>
     createElement(
       "h2",
-      withClassName(props, "mt-8 mb-3 text-lg font-semibold text-foreground")
+      withClassName(
+        props,
+        "font-heading text-step-3 tracking-tight text-foreground"
+      )
     ),
   h3: (props: ComponentPropsWithoutRef<"h3">) =>
     createElement(
       "h3",
-      withClassName(props, "mt-6 mb-2 text-base font-semibold text-foreground")
+      withClassName(
+        props,
+        "font-heading text-step-1 tracking-tight text-foreground"
+      )
     ),
   p: (props: ComponentPropsWithoutRef<"p">) =>
     createElement(
       "p",
-      withClassName(props, "mb-4 text-sm leading-relaxed text-muted")
+      withClassName(props, "text-step-0 text-foreground-soft")
     ),
   a: (props: ComponentPropsWithoutRef<"a">) =>
     createElement("a", {
       ...withClassName(
         props,
-        "text-foreground underline underline-offset-2 transition-colors hover:text-muted"
+        "underline decoration-border underline-offset-4 transition-opacity duration-200 hover:opacity-60"
       ),
       target:
         typeof props.href === "string" && props.href.startsWith("http")
@@ -85,25 +91,25 @@ const mdxComponents: MDXComponents = {
           ? "noreferrer"
           : props.rel,
     }),
-  code: (props: ComponentPropsWithoutRef<"code">) => {
-    if (props.className?.startsWith("language-")) {
-      return createElement("code", props)
-    }
-
-    return createElement(
-      "code",
-      withClassName(
-        props,
-        "rounded border border-border bg-neutral-100 px-1.5 py-0.5 font-mono text-xs dark:bg-neutral-900"
-      )
-    )
-  },
+  blockquote: (props: ComponentPropsWithoutRef<"blockquote">) =>
+    createElement(
+      "blockquote",
+      withClassName(props, "border-l border-border pl-5 text-foreground-soft")
+    ),
   pre: (props: ComponentPropsWithoutRef<"pre">) =>
     createElement(
       "pre",
       withClassName(
         props,
-        "mb-4 overflow-x-auto rounded-xl border border-border bg-neutral-100 p-4 text-sm text-foreground dark:bg-neutral-900"
+        "overflow-x-auto border border-border bg-background-alt p-4 text-sm text-foreground-soft"
+      )
+    ),
+  code: (props: ComponentPropsWithoutRef<"code">) =>
+    createElement(
+      "code",
+      withClassName(
+        props,
+        "rounded-sm bg-background-alt px-1.5 py-0.5 text-[0.95em] text-foreground-soft"
       )
     ),
   strong: (props: ComponentPropsWithoutRef<"strong">) =>

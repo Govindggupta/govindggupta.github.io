@@ -77,7 +77,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <h1 className="font-heading text-step-4 tracking-[-0.06em] text-foreground">
                   {post.title}
                 </h1>
-                <p className="max-w-[900px] text-step-0 text-muted">
+                <p className="max-w-225 text-step-0 text-muted">
                   {post.description}
                 </p>
               </div>
