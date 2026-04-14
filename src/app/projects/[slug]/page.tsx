@@ -94,7 +94,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <PageTransition className="mx-auto max-w-[900px] px-4 pt-24 pb-16 md:px-6">
+    <PageTransition className="mx-auto max-w-225 px-4 section-space pb-16 md:px-6">
       <article>
         <div className="mb-10">
           <ProjectBackLink />
@@ -152,7 +152,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </div>
         </header>
 
-        <div className="relative mt-8 mb-8 aspect-video w-full overflow-hidden rounded-2xl border border-border">
+        <div className="relative mt-8 mb-8 aspect-1200/630 w-full overflow-hidden rounded-2xl border border-border">
           <Image
             src={project.image}
             alt={project.title}
@@ -163,11 +163,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           />
         </div>
 
-        <hr className="my-8 border-border" />
-
         {project.content}
-
-        <hr className="my-8 border-border" />
 
         <footer className="flex items-center justify-between gap-4">
           <ProjectBackLink />
