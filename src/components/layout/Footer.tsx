@@ -13,7 +13,7 @@ const navigation = [
 export function Footer() {
   return (
     <footer className="mt-16 border-t border-border bg-background-alt/70 px-4 py-16 md:px-6">
-      <div className="mx-auto w-full max-w-[900px]">
+      <div className="mx-auto w-full max-w-225">
         <div className="grid gap-12 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] md:items-start">
           <div className="space-y-4">
             <Logo />

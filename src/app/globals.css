@@ -109,7 +109,7 @@
 }
 
 @utility page-shell {
-  @apply mx-auto w-full max-w-[900px] px-5 sm:px-8;
+  @apply mx-auto w-full max-w-225 px-5 sm:px-8;
 }
 
 @utility section-space {
