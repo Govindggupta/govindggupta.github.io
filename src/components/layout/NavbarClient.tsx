@@ -60,9 +60,9 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
   }, [isOpen])
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3">
+    <header className="fixed inset-x-0 top-0 z-50 px-2 pt-2">
       <nav className="mx-auto w-full max-w-225 rounded-2xl border border-border bg-background/80 backdrop-blur-sm">
-        <div className="flex h-14 items-center justify-between px-4 md:px-6">
+        <div className="flex h-14 items-center justify-between px-3 md:px-4">
           <Logo />
 
           <div className="flex items-center gap-1 md:gap-3">
@@ -121,7 +121,7 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
 
             <motion.nav
               id="mobile-navigation"
-              className="fixed right-4 z-20 mx-auto mt-2 flex w-48 max-w-50 flex-col rounded-2xl border border-border bg-background px-2 py-2 text-center shadow-[0_16px_34px_-14px_rgba(0,0,0,0.26)] ring-1 ring-black/6 backdrop-blur-sm md:hidden md:px-6 dark:bg-(--accent) dark:ring-0 dark:shadow-none"
+              className="fixed right-2 z-20 mx-auto mt-2 flex w-48 max-w-50 flex-col rounded-2xl border border-border dark:border-zinc-700/50 bg-background px-2 py-2 text-center shadow-[0_16px_34px_-14px_rgba(0,0,0,0.26)] ring-1 ring-black/6 backdrop-blur-sm md:hidden md:px-6 dark:bg-(--accent) dark:ring-0 dark:shadow-none"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -136,7 +136,7 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
                     href={item.href}
                     className={`rounded-lg px-3 py-2 text-md tracking-[-0.02em] transition-colors duration-200 ${
                       active
-                        ? "bg-(--accent) font-medium text-foreground dark:bg-white/10 dark:text-(--accent-foreground)"
+                        ? "bg-(--accent) font-medium text-foreground dark:bg-zinc-700/50 dark:text-(--accent-foreground)"
                         : "text-muted hover:bg-(--accent-muted) hover:text-foreground"
                     }`}
                   >

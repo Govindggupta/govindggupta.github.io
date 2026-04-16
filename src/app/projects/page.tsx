@@ -1,8 +1,8 @@
 import { ProjectCard } from "@/components/ui/ProjectCard"
 import { BackLink } from "@/components/ui/BackLink"
 import { PageTransition } from "@/components/ui/PageTransition"
-import { getPinnedRepos } from "@/lib/github"
 import { buildMetadata } from "@/lib/metadata"
+import { getAllProjects } from "@/lib/projects"
 
 export async function generateMetadata() {
   return buildMetadata({
@@ -14,7 +14,7 @@ export async function generateMetadata() {
 }
 
 export default async function ProjectsPage() {
-  const repos = await getPinnedRepos()
+  const projects = await getAllProjects()
 
   return (
     <PageTransition className="mx-auto w-full max-w-225 px-4 section-space md:px-6">
@@ -26,20 +26,20 @@ export default async function ProjectsPage() {
           <h1 className="text-4xl font-bold text-foreground">Projects</h1>
         </div>
 
-        {repos.length > 0 ? (
+        {projects.length > 0 ? (
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            {repos
+            {projects
               .sort((a, b) => {
-                const aHasUrl = a.homepageUrl ? 1 : 0
-                const bHasUrl = b.homepageUrl ? 1 : 0
+                const aHasUrl = a.live ? 1 : 0
+                const bHasUrl = b.live ? 1 : 0
                 return bHasUrl - aHasUrl
               })
-              .map((repo) => (
-                <ProjectCard key={repo.name} project={repo} />
+              .map((project) => (
+                <ProjectCard key={project.slug} project={project} />
               ))}
           </div>
         ) : (
-          <p className="text-sm text-muted">No pinned repositories found.</p>
+          <p className="text-sm text-muted">No projects found.</p>
         )}
       </section>
     </PageTransition>

@@ -1,7 +1,5 @@
 import "server-only"
 
-import type { PinnedRepo } from "@/types"
-
 const GITHUB_GRAPHQL_ENDPOINT = "https://api.github.com/graphql"
 const GITHUB_PUBLIC_CONTRIBUTIONS_ENDPOINT = "https://github.com/users"
 const GITHUB_CONTRIBUTIONS_API_ENDPOINT =
@@ -21,35 +19,6 @@ const contributionQuery = `
             contributionDays {
               date
               contributionCount
-            }
-          }
-        }
-      }
-    }
-  }
-`
-
-const pinnedReposQuery = `
-  query {
-    user(login: "govindggupta") {
-      pinnedItems(first: 6, types: REPOSITORY) {
-        nodes {
-          ... on Repository {
-            name
-            description
-            url
-            homepageUrl
-            stargazerCount
-            forkCount
-            primaryLanguage {
-              name
-            }
-            repositoryTopics(first: 4) {
-              nodes {
-                topic {
-                  name
-                }
-              }
             }
           }
         }
@@ -118,52 +87,8 @@ interface GitHubContributionsApiResponse {
   error?: string
 }
 
-interface GitHubPinnedRepoNode {
-  name: string
-  description: string | null
-  url: string
-  homepageUrl: string | null
-  stargazerCount: number
-  forkCount: number
-  primaryLanguage: {
-    name: string
-  } | null
-  repositoryTopics: {
-    nodes: Array<{
-      topic: {
-        name: string
-      }
-    }>
-  }
-}
-
-interface GitHubPinnedReposResponse {
-  data?: {
-    user: {
-      pinnedItems: {
-        nodes: GitHubPinnedRepoNode[]
-      }
-    } | null
-  }
-  errors?: Array<{
-    message: string
-  }>
-}
-
-interface GitHubPublicRepoResponse {
-  name: string
-  description: string | null
-  html_url: string
-  homepage: string | null
-  stargazers_count: number
-  forks_count: number
-  language: string | null
-  topics?: string[]
-}
-
 export const githubProfileUrl = `https://github.com/${GITHUB_USERNAME}`
 const githubProfileApiUrl = `https://api.github.com/users/${GITHUB_USERNAME}`
-const githubRepoApiUrl = "https://api.github.com/repos"
 
 function formatRequestDate(date: Date) {
   const year = date.getUTCFullYear()
@@ -507,156 +432,5 @@ export async function getGitHubProfile(): Promise<GitHubProfile> {
       bio: null,
       login: GITHUB_USERNAME,
     }
-  }
-}
-
-export async function getPinnedRepos(): Promise<PinnedRepo[]> {
-  const token = process.env.GITHUB_TOKEN
-
-  try {
-    if (token) {
-      const response = await fetch(GITHUB_GRAPHQL_ENDPOINT, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          query: pinnedReposQuery,
-        }),
-        next: {
-          revalidate: 3600,
-        },
-      })
-
-      if (response.ok) {
-        const payload = (await response.json()) as GitHubPinnedReposResponse
-
-        if (!payload.errors?.length && payload.data?.user) {
-          const repos = payload.data.user.pinnedItems.nodes.map((repo) => ({
-            name: repo.name,
-            description: repo.description,
-            url: repo.url,
-            homepageUrl: repo.homepageUrl,
-            stargazerCount: repo.stargazerCount,
-            forkCount: repo.forkCount,
-            language: repo.primaryLanguage?.name ?? null,
-            topics: repo.repositoryTopics.nodes.map((node) => node.topic.name),
-          }))
-
-          if (repos.length > 0) {
-            return repos
-          }
-        }
-      }
-    }
-
-    const profileResponse = await fetch(githubProfileUrl, {
-      headers: {
-        Accept: "text/html",
-        "User-Agent": "govindgupta.me",
-      },
-      next: {
-        revalidate: 3600,
-      },
-    })
-
-    if (!profileResponse.ok) {
-      return []
-    }
-
-    const profileMarkup = await profileResponse.text()
-    const pinnedSectionMatch = profileMarkup.match(
-      /<div class="js-pinned-items-reorder-container">[\s\S]*?<\/ol>/
-    )
-
-    if (!pinnedSectionMatch) {
-      return []
-    }
-
-    const pinnedRepoMatches = Array.from(
-      pinnedSectionMatch[0].matchAll(
-        /<a[^>]*href="\/(?<owner>[^/"]+)\/(?<repo>[^/"]+)"[^>]*class="[^"]*text-bold wb-break-word[^"]*"/g
-      )
-    )
-
-    const pinnedRepoRefs = pinnedRepoMatches
-      .map((match) => {
-        const owner = match.groups?.owner
-        const repo = match.groups?.repo
-
-        if (!owner || !repo) {
-          return null
-        }
-
-        return {
-          owner,
-          repo,
-        }
-      })
-      .filter(
-        (
-          repoRef
-        ): repoRef is {
-          owner: string
-          repo: string
-        } => repoRef !== null
-      )
-      .filter(
-        (repoRef, index, repoRefs) =>
-          repoRefs.findIndex(
-            (candidate) =>
-              candidate.owner === repoRef.owner &&
-              candidate.repo === repoRef.repo
-          ) === index
-      )
-      .slice(0, 6)
-
-    if (pinnedRepoRefs.length === 0) {
-      return []
-    }
-
-    const repos = await Promise.all(
-      pinnedRepoRefs.map(async ({ owner, repo }) => {
-        const repoResponse = await fetch(
-          `${githubRepoApiUrl}/${owner}/${repo}`,
-          {
-            headers: {
-              Accept: "application/vnd.github+json",
-              "X-GitHub-Api-Version": "2022-11-28",
-              ...(token ? { Authorization: `Bearer ${token}` } : {}),
-            },
-            next: {
-              revalidate: 3600,
-            },
-          }
-        )
-
-        if (!repoResponse.ok) {
-          return null
-        }
-
-        const repoPayload =
-          (await repoResponse.json()) as GitHubPublicRepoResponse
-
-        return {
-          name: repoPayload.name,
-          description: repoPayload.description,
-          url: repoPayload.html_url,
-          homepageUrl:
-            repoPayload.homepage && repoPayload.homepage.trim().length > 0
-              ? repoPayload.homepage
-              : null,
-          stargazerCount: repoPayload.stargazers_count,
-          forkCount: repoPayload.forks_count,
-          language: repoPayload.language,
-          topics: repoPayload.topics?.slice(0, 4) ?? [],
-        } satisfies PinnedRepo
-      })
-    )
-
-    return repos.filter((repo): repo is PinnedRepo => repo !== null)
-  } catch {
-    return []
   }
 }

@@ -20,7 +20,7 @@ export async function generateMetadata() {
 
 export default function ContactPage() {
   return (
-    <PageTransition className="mx-auto w-full max-w-[900px] px-4 section-space md:px-6">
+    <PageTransition className="mx-auto w-full max-w-225 px-4 section-space md:px-6">
       <section className="space-y-12">
         <div className="space-y-4">
           <BackLink href="/" className="mb-0">
@@ -29,7 +29,7 @@ export default function ContactPage() {
           <h1 className="font-heading text-step-4 tracking-[-0.06em] text-foreground">
             Let&apos;s Talk
           </h1>
-          <p className="max-w-[900px] text-step-0 text-muted">
+          <p className="max-w-225 text-step-0 text-muted">
             If you are building on the web and need a developer who values clean
             systems, sharp interfaces, and steady execution, reach out.
           </p>

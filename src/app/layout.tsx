@@ -48,7 +48,7 @@ export default function RootLayout({
         <ThemeProvider>
           <div className="flex min-h-screen flex-col bg-background">
             <Navbar />
-            <main className="mx-auto w-full max-w-[900px] flex-1 pt-[4.5rem]">
+            <main className="mx-auto w-full max-w-225 flex-1 pt-[4.5rem]">
               {children}
             </main>
             <Footer />

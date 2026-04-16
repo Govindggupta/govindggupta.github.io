@@ -1,0 +1,26 @@
+---
+title: "Chess"
+description: "A real-time multiplayer chess game."
+date: "2024-04-28"
+status: "completed"
+github: "https://github.com/govindggupta/chess"
+live: "https://chess-sand-sigma.vercel.app"
+tech: ["React", "Node.js", "WebSockets"]
+image: "https://api.microlink.io?url=https%3A%2F%2Fchess-sand-sigma.vercel.app&screenshot=true&meta=false&embed=screenshot.url"
+---
+
+## Overview
+
+I built this project because I wanted to make something interactive, stateful, and genuinely fun to use. Chess is a familiar game, but building it from scratch forces you to think about much more than the board. You have turns, move rules, synchronization, reconnection, and the small details that make play feel smooth instead of fragile. It became a great way to practice real-time systems through a product that people instantly understand.
+
+## Why chess
+
+Chess was appealing because it combines clear structure with a surprising amount of edge cases. Every move changes the entire state of the game, and that means mistakes show up quickly. I liked that pressure. It pushed me to think carefully about how game state should be represented and validated. I also wanted a project that people could open and understand in seconds, because that kind of instant clarity makes it easier to focus on the quality of the implementation.
+
+## Real-time architecture
+
+The core of the project is a Node.js backend that manages rooms, keeps both players in sync, and broadcasts moves over WebSockets as soon as they happen. On the client side, React handles the board state and interaction flow so the game feels responsive even while waiting on server confirmation. I treated the server as the source of truth for turns and updates, which made the multiplayer behavior much more reliable than trying to trust each browser independently.
+
+## What I learned
+
+This project taught me how quickly real-time apps expose weak assumptions. Things that feel simple in a single-player prototype become much more delicate when two users are connected at once. I learned to think more carefully about event timing, conflict prevention, and how to recover gracefully when state falls out of sync. More than anything, building chess gave me confidence that I can take a familiar idea and turn it into something technically rigorous.

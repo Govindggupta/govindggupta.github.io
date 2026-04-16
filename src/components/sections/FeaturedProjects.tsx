@@ -2,24 +2,24 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
 import { ProjectCard } from "@/components/ui/ProjectCard"
-import type { PinnedRepo } from "@/types"
+import type { ProjectSummary } from "@/lib/projects"
 
-export function FeaturedProjects({ repos }: { repos: PinnedRepo[] }) {
-  const featuredRepos = repos.slice(0, 4)
+export function FeaturedProjects({ projects }: { projects: ProjectSummary[] }) {
+  const featuredProjects = projects.slice(0, 4)
 
   return (
     <section className="space-y-6">
-      {featuredRepos.length > 0 ? (
+      {featuredProjects.length > 0 ? (
         <>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            {featuredRepos
+            {featuredProjects
               .sort((a, b) => {
-                const aHasUrl = a.homepageUrl ? 1 : 0
-                const bHasUrl = b.homepageUrl ? 1 : 0
+                const aHasUrl = a.live ? 1 : 0
+                const bHasUrl = b.live ? 1 : 0
                 return bHasUrl - aHasUrl
               })
-              .map((repo) => (
-                <ProjectCard key={repo.name} project={repo} />
+              .map((project) => (
+                <ProjectCard key={project.slug} project={project} />
               ))}
           </div>
 
@@ -38,7 +38,7 @@ export function FeaturedProjects({ repos }: { repos: PinnedRepo[] }) {
           </div>
         </>
       ) : (
-        <p className="text-sm text-muted">No pinned repositories found.</p>
+        <p className="text-sm text-muted">No projects found.</p>
       )}
     </section>
   )
