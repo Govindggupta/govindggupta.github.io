@@ -15,13 +15,13 @@ export async function generateMetadata() {
 
 export default function ResumePage() {
   return (
-    <PageTransition className="mx-auto w-full max-w-none px-2 page-top-spacing md:px-4">
+    <PageTransition className="mx-auto w-full max-w-none px-4 page-top-spacing md:px-6">
       <section className="space-y-6">
         <div className="space-y-4">
           <BackLink href="/" className="mb-0">
             Back home
           </BackLink>
-          <h1 className="text-2xl font-bold text-foreground">Resume</h1>
+          <h1 className="text-4xl font-bold text-foreground">Resume</h1>
           <p className="text-sm text-muted">View my resume below.</p>
         </div>
 
@@ -29,27 +29,10 @@ export default function ResumePage() {
           <iframe
             title="Resume PDF"
             src={resumeViewerPath}
-            className="h-[88vh] w-full"
+            className="h-300 w-full"
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-4">
-          <a
-            href={resumeFilePath}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center rounded-md border border-border px-4 py-2 text-sm text-foreground transition-colors duration-200 hover:bg-muted"
-          >
-            Open in new tab
-          </a>
-          <a
-            href={resumeFilePath}
-            download
-            className="inline-flex items-center rounded-md border border-border px-4 py-2 text-sm text-foreground transition-colors duration-200 hover:bg-muted"
-          >
-            Download PDF
-          </a>
-        </div>
       </section>
     </PageTransition>
   )
