@@ -3,13 +3,28 @@ import { socials } from "@/data/socials"
 function getSocialHoverBgClass(label: string) {
   switch (label) {
     case "LinkedIn":
-      return "hover:bg-[#E8F0FE] hover:text-[#0A66C2] dark:hover:bg-[#0A66C2] dark:hover:text-white"
+      return "bg-[#0A66C2]"
     case "GitHub":
-      return "hover:bg-[#FCEEF7] hover:text-[#BF4B8A] dark:hover:bg-[#BF4B8A] dark:hover:text-white"
+      return "bg-[#BF4B8A]"
     case "Discord":
-      return "hover:bg-[#EEF0FF] hover:text-[#5865F2] dark:hover:bg-[#5865F2] dark:hover:text-white"
+      return "bg-[#5865F2]"
     case "X":
-      return "hover:bg-[#E8F5FD] hover:text-[#1D9BF0] dark:hover:bg-[#1D9BF0] dark:hover:text-white"
+      return "bg-[#1D9BF0]"
+    default:
+      return ""
+  }
+}
+
+function getSocialHoverTextClass(label: string) {
+  switch (label) {
+    case "LinkedIn":
+      return "hover:text-white focus-visible:text-white"
+    case "GitHub":
+      return "hover:text-white focus-visible:text-white"
+    case "Discord":
+      return "hover:text-white focus-visible:text-white"
+    case "X":
+      return "hover:text-white focus-visible:text-white"
     default:
       return ""
   }
@@ -33,9 +48,15 @@ export function HeroSocialLinks() {
               target="_blank"
               rel="noreferrer"
               aria-label={label}
-              className={`flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-(--accent) text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_1px_2px_rgba(0,0,0,0.08)] transition-colors duration-150 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_1px_2px_rgba(0,0,0,0.28)] ${getSocialHoverBgClass(label)}`}
+              className={`group relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-border bg-(--accent) text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_1px_2px_rgba(0,0,0,0.08)] transition-colors duration-150 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_1px_2px_rgba(0,0,0,0.28)] ${getSocialHoverTextClass(label)}`}
             >
-              <Icon size={getSocialIconSize(label)} strokeWidth={2} />
+              <span
+                aria-hidden="true"
+                className={`pointer-events-none absolute top-0 left-0 h-[300%] w-[300%] -translate-x-1/2 -translate-y-1/2 rounded-full scale-0 transition-transform duration-300 ease-out group-hover:scale-100 ${getSocialHoverBgClass(label)}`}
+              />
+              <span className="relative z-10">
+                <Icon size={getSocialIconSize(label)} strokeWidth={2} />
+              </span>
             </a>
           </li>
         ))}
