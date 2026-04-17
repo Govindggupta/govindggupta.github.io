@@ -77,7 +77,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <PageTransition className="mx-auto max-w-225 px-4 section-space pb-16 md:px-6">
+    <PageTransition className="mx-auto max-w-225 px-4 page-top-spacing pb-16 md:px-6">
       <article>
         <div className="space-y-4">
           <BackLink href="/projects" className="mb-0">
@@ -153,7 +153,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <div className="prose-story">{project.content}</div>
 
         <footer className="flex items-center justify-between gap-4">
-          <BackLink href="/projects" className="!mb-0 shrink-0 whitespace-nowrap">
+          <BackLink href="/projects" className="mb-0! shrink-0 whitespace-nowrap">
             Back to projects
           </BackLink>
           <a

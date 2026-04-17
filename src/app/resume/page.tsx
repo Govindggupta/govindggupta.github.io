@@ -15,7 +15,7 @@ export async function generateMetadata() {
 
 export default function ResumePage() {
   return (
-    <PageTransition className="mx-auto w-full max-w-none px-2 section-space md:px-4">
+    <PageTransition className="mx-auto w-full max-w-none px-2 page-top-spacing md:px-4">
       <section className="space-y-6">
         <div className="space-y-4">
           <BackLink href="/" className="mb-0">

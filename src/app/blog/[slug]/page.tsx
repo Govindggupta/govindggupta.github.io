@@ -53,7 +53,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <>
       <ReadingProgress />
-      <PageTransition className="mx-auto w-full max-w-225 px-4 section-space md:px-6">
+      <PageTransition className="mx-auto w-full max-w-225 px-4 page-top-spacing md:px-6">
         <article className="space-y-12">
           <div className="space-y-8">
             <Link
