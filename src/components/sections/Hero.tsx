@@ -103,7 +103,7 @@ export async function Hero() {
           <ul>
             <HeroInfoRow
               icon={
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,0.14)]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,0.15),0_0_0_8px_rgba(16,185,129,0.10)] " />
               }
             >
               Open to work

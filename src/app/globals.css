@@ -116,6 +116,10 @@
   @apply pt-20 pb-0;
 }
 
+@utility page-top-spacing {
+  @apply mt-8;
+}
+
 @utility section-kicker {
   @apply font-mono text-xs tracking-[0.22em] text-muted uppercase;
 }

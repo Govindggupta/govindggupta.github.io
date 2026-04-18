@@ -20,7 +20,7 @@ export async function generateMetadata() {
 
 export default function ContactPage() {
   return (
-    <PageTransition className="mx-auto w-full max-w-225 px-4 section-space md:px-6">
+    <PageTransition className="mx-auto w-full max-w-225 px-4 page-top-spacing md:px-6">
       <section className="space-y-12">
         <div className="space-y-4">
           <BackLink href="/" className="mb-0">

@@ -17,9 +17,9 @@ export default async function BlogPage() {
   const posts = await getAllPosts()
 
   return (
-    <PageTransition className="mx-auto w-full max-w-225 px-4 section-space md:px-6">
+    <PageTransition className="mx-auto w-full max-w-225 px-4 page-top-spacing md:px-6">
       <section className="space-y-6">
-        <div className="space-y-4">
+        <div >
           <BackLink href="/" className="mb-0">
             Back home
           </BackLink>
