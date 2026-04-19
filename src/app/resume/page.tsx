@@ -3,8 +3,10 @@ import { BackLink } from "@/components/ui/BackLink"
 import { PageTransition } from "@/components/ui/PageTransition"
 import { buildMetadata } from "@/lib/metadata"
 
-const resumeFilePath = "/resume/resume.pdf"
-const resumeViewerPath = "/resume/resume.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+const resumeDriveViewPath =
+  "https://drive.google.com/file/d/10XYDOzjXXbmYI8bkalxsNdqEvpEDpsFF/view?usp=sharing"
+const resumeDrivePreviewPath =
+  "https://drive.google.com/file/d/10XYDOzjXXbmYI8bkalxsNdqEvpEDpsFF/preview"
 
 export async function generateMetadata() {
   return buildMetadata({
@@ -30,11 +32,10 @@ export default function ResumePage() {
         <div className="overflow-hidden rounded-xl border border-border bg-card">
           <iframe
             title="Resume PDF"
-            src={resumeViewerPath}
-            className="h-300 w-full"
+            src={resumeDrivePreviewPath}
+            className="h-150 sm:h-250 lg:h-300 w-full"
           />
         </div>
-
       </section>
     </PageTransition>
   )

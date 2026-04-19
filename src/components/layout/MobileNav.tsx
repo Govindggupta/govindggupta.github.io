@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 
 import { AnimatePresence, motion } from "framer-motion"
 import Link from "next/link"
@@ -32,19 +32,7 @@ export function MobileNav({
   navigation,
   onClose,
 }: MobileNavProps) {
-  const openSoundRef = useRef<HTMLAudioElement | null>(null)
   const { trackEvent } = useUmami()
-
-  useEffect(() => {
-    const openSound = new Audio("/sound/nav-click.mp3")
-    openSound.preload = "auto"
-    openSoundRef.current = openSound
-
-    return () => {
-      openSound.pause()
-      openSoundRef.current = null
-    }
-  }, [])
 
   useEffect(() => {
     if (!isOpen) {
@@ -53,16 +41,6 @@ export function MobileNav({
 
     trackEvent("mobile_nav_open", {
       path: pathname,
-    })
-
-    const openSound = openSoundRef.current
-    if (!openSound) {
-      return
-    }
-
-    openSound.currentTime = 0
-    void openSound.play().catch(() => {
-      // Ignore browser playback policy errors.
     })
   }, [isOpen, pathname, trackEvent])
 

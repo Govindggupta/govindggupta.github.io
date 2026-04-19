@@ -8,7 +8,7 @@ function getSocialHoverBgClass(label: string) {
     case "LinkedIn":
       return "bg-[#0A66C2]"
     case "GitHub":
-      return "bg-[#BF4B8A]"
+      return "bg-[#2ea043]"
     case "Discord":
       return "bg-[#5865F2]"
     case "X":
