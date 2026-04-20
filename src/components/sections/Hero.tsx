@@ -63,18 +63,18 @@ export async function Hero() {
   const name = profile.name ?? "Govind Gupta"
 
   return (
-    <section className="mx-auto w-full max-w-225 px-4 pt-20 pb-0 md:px-6">
+    <section className="mx-auto w-full max-w-225 pt-20 pb-0">
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={heroTransition}
         className="space-y-12"
       >
-        <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
+        <div className="flex items-center gap-4 px-2 sm:gap-6 md:gap-8">
           <div className="flex shrink-0 items-center justify-start">
             <ProfileImageBorder
               size={168}
-              className="h-26 w-26 sm:h-30 sm:w-30 md:h-42 md:w-42"
+              className="size-32 sm:size-42"
             >
               <Image
                 src={profile.avatar_url}
@@ -95,12 +95,12 @@ export async function Hero() {
             </h1>
             <TextFlip
               texts={heroFlipSentences}
-              className="block text-base text-muted sm:text-lg"
+              className="w-full text-base leading-6 text-muted sm:text-lg sm:leading-7"
             />
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 px-4 md:px-6">
           <ul>
             <HeroInfoRow
               icon={

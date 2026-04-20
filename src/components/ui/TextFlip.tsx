@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import {
   AnimatePresence,
@@ -37,6 +37,8 @@ export function TextFlip({
   variants = defaultVariants,
 }: Readonly<TextFlipProps>) {
   const [index, setIndex] = useState(0)
+  const [reservedHeight, setReservedHeight] = useState<number | null>(null)
+  const containerRef = useRef<HTMLSpanElement | null>(null)
   const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
@@ -53,28 +55,101 @@ export function TextFlip({
     }
   }, [interval, shouldReduceMotion, texts.length])
 
+  useEffect(() => {
+    if (texts.length === 0) {
+      return
+    }
+
+    const container = containerRef.current
+    if (!container) {
+      return
+    }
+
+    const measurementNode = document.createElement("span")
+    measurementNode.className = [className, "block"].filter(Boolean).join(" ")
+    measurementNode.style.position = "absolute"
+    measurementNode.style.left = "0"
+    measurementNode.style.top = "0"
+    measurementNode.style.visibility = "hidden"
+    measurementNode.style.pointerEvents = "none"
+    measurementNode.style.whiteSpace = "normal"
+
+    function calculateReservedHeight() {
+      if (!container) {
+        return
+      }
+
+      const width = container.clientWidth
+      if (width <= 0) {
+        return
+      }
+
+      measurementNode.style.width = `${width}px`
+
+      if (!container.contains(measurementNode)) {
+        container.appendChild(measurementNode)
+      }
+
+      let maxHeight = 0
+      for (const text of texts) {
+        measurementNode.textContent = text
+        maxHeight = Math.max(
+          maxHeight,
+          Math.ceil(measurementNode.getBoundingClientRect().height),
+        )
+      }
+
+      setReservedHeight((currentHeight) =>
+        currentHeight === maxHeight ? currentHeight : maxHeight,
+      )
+    }
+
+    calculateReservedHeight()
+
+    const resizeObserver = new ResizeObserver(() => {
+      calculateReservedHeight()
+    })
+    resizeObserver.observe(container)
+
+    if ("fonts" in document) {
+      void document.fonts.ready.then(() => {
+        calculateReservedHeight()
+      })
+    }
+
+    return () => {
+      resizeObserver.disconnect()
+
+      if (container.contains(measurementNode)) {
+        container.removeChild(measurementNode)
+      }
+    }
+  }, [className, texts])
+
   if (texts.length === 0) {
     return null
   }
 
   const activeText = texts[index] ?? texts[0]
   const classes = [
-    "relative inline-flex min-h-[1lh] items-center overflow-hidden",
+    "relative inline-flex min-h-[1lh] items-top overflow-hidden",
     className,
   ]
     .filter(Boolean)
     .join(" ")
+  const style =
+    reservedHeight === null ? undefined : { minHeight: `${reservedHeight}px` }
 
   if (shouldReduceMotion) {
     return (
-      <span className={classes} aria-live="off">
+      <span ref={containerRef} className={classes} style={style} aria-live="off">
         {texts[0]}
       </span>
     )
   }
 
   return (
-    <span className={classes} aria-live="off">
+    <span ref={containerRef} className={classes} style={style} aria-live="off">
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={`${index}-${activeText}`}
