@@ -27,19 +27,17 @@ const heroTransition = {
 
 function InfoIconShell({ children }: { children: ReactNode }) {
   return (
-    <span className="flex items-center justify-center p-px border-foreground/10 border rounded-[0.7rem]"> 
-    <span
-      className={[
-        "flex h-7 w-7 shrink-0 items-center justify-center rounded-[0.6rem] border leading-none",
-        "border-muted/40 bg-black/3 text-muted dark:bg-white/10",
-      ].join(" ")}
-    >
-      <span className="flex items-center justify-center leading-none [&_svg]:block">
+    <span className="inline-flex items-center justify-center rounded-[0.7rem] border border-foreground/10 p-px">
+      <span
+        className={[
+          "grid h-7 w-7 shrink-0 place-items-center rounded-[0.6rem] border leading-0",
+          "border-muted/40 bg-black/3 text-muted dark:bg-white/10",
+          "[&_svg]:block [&_svg]:h-4.5 [&_svg]:w-4.5",
+        ].join(" ")}
+      >
         {children}
       </span>
     </span>
-    </span>
-
   )
 }
 
@@ -106,7 +104,7 @@ export async function Hero() {
           <ul>
             <HeroInfoRow
               icon={
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,0.15),0_0_0_8px_rgba(16,185,129,0.10)] " />
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_0_3px_rgba(16,185,129,0.15),0_0_0_6px_rgba(16,185,129,0.10)] " />
               }
             >
               Open to work
@@ -114,7 +112,7 @@ export async function Hero() {
           </ul>
 
           <ul className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2 sm:gap-x-6">
-            <HeroInfoRow icon={<BriefcaseBusiness size={19} strokeWidth={2} />}>
+            <HeroInfoRow icon={<BriefcaseBusiness strokeWidth={2} />}>
               Full Stack Developer
             </HeroInfoRow>
 
@@ -122,15 +120,15 @@ export async function Hero() {
               <HeroEmailLink email="contact@govindgupta.me" />
             </HeroInfoRow>
 
-            <HeroInfoRow icon={<MapPin size={19} strokeWidth={2} />}>
+            <HeroInfoRow icon={<MapPin strokeWidth={2} />}>
               Surat, Gujarat, India
             </HeroInfoRow>
 
-            <HeroInfoRow icon={<Clock3 size={19} strokeWidth={2} />}>
+            <HeroInfoRow icon={<Clock3 strokeWidth={2} />}>
               <HeroLocalTime />
             </HeroInfoRow>
 
-            <HeroInfoRow icon={<Globe size={19} strokeWidth={2} />}>
+            <HeroInfoRow icon={<Globe  strokeWidth={2} />}>
               <a
                 href="https://govindgupta.me"
                 target="_blank"
@@ -141,7 +139,7 @@ export async function Hero() {
               </a>
             </HeroInfoRow>
 
-            <HeroInfoRow icon={<Mars size={19} strokeWidth={2} />}>
+            <HeroInfoRow icon={<Mars strokeWidth={2} />}>
               <span className="cursor-text">he/him</span>
             </HeroInfoRow>
           </ul>
