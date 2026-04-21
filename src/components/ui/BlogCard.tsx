@@ -61,7 +61,7 @@ export function BlogCard({ post }: BlogCardProps) {
                   <ArrowRight
                     size={14}
                     strokeWidth={1.9}
-                    className="mt-px shrink-0 text-muted transition-all duration-150 ease-in-out group-hover:translate-x-0.5 group-hover:text-white"
+                    className="mt-px shrink-0 text-muted transition-all duration-150 ease-in-out group-hover:translate-x-0.5 dark:group-hover:text-white group-hover:text-foreground"
                   />
                 </span>
               </p>
