@@ -6,6 +6,8 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { useTheme } from "next-themes"
 import { ArrowUpRight } from "lucide-react"
 
+import { Tooltip } from "./Tooltip"
+
 const SCROLL_THRESHOLD_MIN = 260
 const SCROLL_THRESHOLD_RATIO = 0.45
 const SCROLL_DIRECTION_DELTA = 6
@@ -151,12 +153,9 @@ export function BackToTop() {
                 className="absolute -rotate-45 translate-y-5 text-black opacity-0 transition-all duration-150 ease-out group-hover:translate-y-0 group-hover:opacity-100 dark:text-white"
               />
 
-              <span className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-3 hidden -translate-x-1/2 whitespace-nowrap opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100 sm:block">
-                <span className="relative inline-flex items-center rounded-[0.9rem] border border-white/10 bg-neutral-950 px-3.5 py-2.5 text-[13px] leading-none font-medium text-white dark:border-black/10 dark:bg-white dark:text-neutral-900">
-                  Back to top
-                  <span className="absolute top-full left-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1 rotate-45 border-r border-b border-white/10 bg-neutral-950 dark:border-black/10 dark:bg-white" />
-                </span>
-              </span>
+              <Tooltip className="mb-3 hidden opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100 sm:block">
+                Back to top
+              </Tooltip>
             </motion.button>
           </div>
         </motion.div>
