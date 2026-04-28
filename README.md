@@ -2,7 +2,7 @@
 
 [![GitHub Repo Views](https://gitviews.com/repo/govindggupta/govindgupta.me.svg?style=flat&label-color=%23555&color=%23f59e0b)](https://gitviews.com/repo/govindggupta/govindgupta.me)
 
-A modern, responsive developer portfolio built with Next.js 15, featuring a blog with MDX support, dark/light theme, and interactive UI elements.
+A minimal developer portfolio to showcase my professional work, selected projects, and writing.
 
 > **Live Site:** [govindgupta.me](https://govindgupta.me)
 
