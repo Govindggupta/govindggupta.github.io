@@ -76,6 +76,26 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 | `npm run typecheck` | Run TypeScript type checking |
 | `npm run format` | Check code formatting |
 
+## Project Structure
+
+```
+.
+├── src/
+│   ├── app/                 # Next.js App Router pages
+│   │   ├── (app)/           # Main application routes
+│   │   ├── api/             # API routes
+│   │   └── blog/            # Blog pages
+│   ├── components/          # React components
+│   │   ├── sections/        # Page sections (Hero, About, etc.)
+│   │   ├── ui/              # Reusable UI components
+│   │   └── analytics/       # Analytics components
+│   ├── content/             # MDX blog content
+│   └── providers/           # React context providers
+├── public/                  # Static assets
+├── .github/                 # GitHub assets & workflows
+└── out/                     # Build output
+```
+
 ## Contributing
 
 See the [Contributing Guide](CONTRIBUTING.md) for details.
