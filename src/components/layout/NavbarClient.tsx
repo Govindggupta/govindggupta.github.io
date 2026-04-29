@@ -12,7 +12,7 @@ import { Logo } from "@/components/ui/Logo"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
 import VerticalBar from "../ui/VerticalBar"
 
-const NAV_CLICK_SOUND_SRC = "/sound/nav-click.mp3"
+const NAV_CLICK_SOUND_SRC = "/sound/nav-click.wav"
 
 let navAudioContext: AudioContext | null = null
 let navClickBuffer: AudioBuffer | null = null

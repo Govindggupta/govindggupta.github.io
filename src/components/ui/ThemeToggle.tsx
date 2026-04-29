@@ -18,7 +18,7 @@ const sunRays = [
   { x1: 6.17, y1: 6.17, x2: 5.11, y2: 5.11 },
 ] as const
 
-const CLICK_SOUND_SRC = "/click_20.mp3"
+const CLICK_SOUND_SRC = "/sound/click_20.wav"
 
 let audioContext: AudioContext | null = null
 let clickBuffer: AudioBuffer | null = null
